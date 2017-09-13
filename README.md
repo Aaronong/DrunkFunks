@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.1.
 
+## Setup for Development
+
+- Both the CLI and generated project have dependencies that require Node 6.9.0 or higher, together with NPM 3 or higher.
+- Clone the repository and cd to project
+- npm install
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
