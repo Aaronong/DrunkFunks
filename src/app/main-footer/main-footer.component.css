@@ -1,0 +1,17 @@
+.right {
+    text-align: right;
+}
+.small-btn {
+    line-height: 16px;
+}
+.right-padded {
+    padding-right: 8px;
+}
+.top-padded {
+    padding-top: 8px;
+}
+hr.divider{
+	height: 10px;
+	border: 0;
+	box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}

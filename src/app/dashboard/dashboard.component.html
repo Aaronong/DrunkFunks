@@ -1,0 +1,29 @@
+<ons-card>
+  <div class="title">
+    Dashboard
+  </div>
+  <div class="content">
+    <div class="center">
+      <span>Join your friend's group and let Alfred take care of you after your night out.</span><br>
+      <ons-button class="margin-top" (click)="joinGroup()">Join a Group</ons-button>
+    </div>
+  </div>
+</ons-card>
+<ons-list>
+  <ons-list-header>My Groups</ons-list-header>
+  <ons-list-item tappable (click)="newGroup()">
+    <ons-icon icon="ion-plus" size="30px" fixed-width="true"></ons-icon>
+    <span>Create New Group</span>
+  </ons-list-item>
+  <div *ngIf="groups;else loading_groups">
+    <div *ngFor="let group of groups">
+    <ons-list-item tappable (click)="enterGroup(group)">
+      <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{group.name}}</span></ons-list-item>
+    </div>
+  </div>
+</ons-list>
+<ng-template #loading_groups>
+  <ons-list-item>
+    <ons-progress-circular indeterminate></ons-progress-circular><span>Loading Groups...</span>
+  </ons-list-item>
+</ng-template>

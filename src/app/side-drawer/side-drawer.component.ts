@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../menu.service';
+import { LoginService } from '../login.service';
+import { User } from '../user';
 
 @Component({
   selector: 'ons-page[side]',
@@ -8,7 +10,16 @@ import { MenuService } from '../menu.service';
 })
 export class SideDrawerComponent implements OnInit {
 
-  constructor(private menuService: MenuService) { }
+  public user = {
+    id: 0
+  };
+
+  constructor(
+    private menuService: MenuService,
+    private loginService: LoginService,
+  ) {
+    this.user.id = loginService.getPlaceHolderUser();
+   }
 
   ngOnInit() {
   }
