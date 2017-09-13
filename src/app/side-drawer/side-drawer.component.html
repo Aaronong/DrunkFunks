@@ -1,0 +1,12 @@
+<ons-toolbar>
+    <div class="center">Quick Links</div>
+    <div class="right">
+      <ons-icon icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon> 
+    </div>
+  </ons-toolbar>
+  <div class="background"></div>
+  <div class="content">
+    <ons-list-item modifier="nodivider"><a [routerLink]="['/about']" (click)="closeMenu()">About</a></ons-list-item>
+    <ons-list-item modifier="nodivider"><a [routerLink]="['/privacy']" (click)="closeMenu()">Privacy</a></ons-list-item>
+    <ons-list-item modifier="nodivider"><a [routerLink]="['/tos']" (click)="closeMenu()">Terms of Service</a></ons-list-item>
+  </div>
