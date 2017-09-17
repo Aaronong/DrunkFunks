@@ -1,0 +1,45 @@
+<div *ngIf="!loading;else loading_group">
+<div *ngIf="group;else no_group">
+  <ons-card>
+    <ons-button [routerLink]="['/dashboard']" modifier="light small">Back</ons-button>
+    <div class="title top-padded">
+      {{group.name}}
+    </div>
+    <div class="content">
+      <ons-list-header>Users in Group</ons-list-header>
+      <div *ngIf="users;else loading_user">
+      <div *ngIf="users.length>0;else no_user">
+        <div *ngFor="let user of users">
+          <ons-list-item [routerLink]="['/user', user.id]" tappable>
+            <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{user.username}}</span></ons-list-item>
+        </div>
+      </div>
+      </div>
+    </div>
+  </ons-card>
+</div>
+</div>
+<!-- NG Templates -->
+<ng-template #no_group>
+  <ons-card>
+    <div class="content">
+      <ons-icon icon="ion-ios-help" size="40px" fixed-width="true"></ons-icon>
+      <span>There is no such group.</span>
+    </div>
+  </ons-card>
+</ng-template>
+<ng-template #loading_group>
+  <ons-card>
+    <div class="content">
+      <ons-progress-circular indeterminate></ons-progress-circular><span>Loading Group...</span>
+    </div>
+  </ons-card>
+</ng-template>
+<ng-template #loading_user>
+  <ons-list-item>
+    <ons-progress-circular indeterminate></ons-progress-circular><span>Loading users...</span></ons-list-item>
+</ng-template>
+<ng-template #no_user>
+  <ons-list-item>
+    <span>There are no users in this group!</span></ons-list-item>
+</ng-template>
