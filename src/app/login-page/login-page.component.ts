@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login.service';
 import * as ons from 'onsenui';
 
 @Component({
@@ -8,13 +9,15 @@ import * as ons from 'onsenui';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private loginService: LoginService,
+  ) { }
 
   ngOnInit() {
   }
 
-  loginWithFacebook() {
-    ons.notification.toast('Login With Facebook', {timeout: 2000});
+  toggleFacebookLogin() {
+    this.loginService.toggleFacebookLogin(); 
   }
 
   signIn() {

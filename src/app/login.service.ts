@@ -62,8 +62,8 @@ export class LoginService {
   }
 
   toggleFacebookLogin() {
-    if (this.fbProfile === null || this.userProfile === null) {
-      this.loginWithFacebook();
+    if (this.fbProfile === null) {
+      this.loginWithFacebookOnly();
     } else {
       this.logoutFromFacebook();
     }
@@ -116,6 +116,24 @@ export class LoginService {
     });
   }
 
+  loginWithFacebookOnly() {
+    this.fbService.login(this.options).then((response: LoginResponse) => {
+      this.fbToken = response.authResponse.accessToken;
+      (<any>window).localStorage.setItem("fbToken", this.fbToken);
+      return this._fetchFacebookProfile();
+    }).then((fbProfile) => {
+      return this._generateServerTokens(this.fbToken, this.fbProfile);
+    }).then((response) => {
+      let jwtToken = response.json()["token"];
+      this.jwtToken = jwtToken;
+      (<any>window).localStorage.setItem("jwtToken", jwtToken);
+      this.loggedIn.next(true);
+    }).catch((error: any) => {
+      console.error(error);
+      this.logoutFromFacebook();
+    });
+  }
+
   logoutFromFacebook() {
     this.fbProfile = null;
     this.userProfile = null;
@@ -159,7 +177,7 @@ export class LoginService {
   }
 
   _generateServerTokens(fbToken: string, fbProfile: any) {
-    let url = "https://api.nusreviews.com/generateServerToken";
+    let url = "https://api.thealfredbutler.com/generateServerToken";
     let query = "?fbToken=" + fbToken +
                 "&email=" + fbProfile.email +
                 "&name=" + fbProfile.name + 
