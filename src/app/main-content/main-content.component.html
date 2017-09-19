@@ -1,6 +1,6 @@
 <ons-page>
   <ons-toolbar>
-    <div class="left padded-left" *ngIf="currentGroup;else group_name" (click)="openMenu()">
+    <div class="left padded-left" *ngIf="!currentGroup;else group_name" (click)="openMenu()">
       <span [routerLink]="['/main']"><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
         <span class="nav-title">Alfred</span>
       </span>
@@ -34,7 +34,7 @@
   <ons-list-item [routerLink]="['/login']" tappable (click)="closeMenu()"><span class="menu-item">Login</span></ons-list-item>
 </ng-template>
 <ng-template #group_name>
-  <span [routerLink]="['/group', currentGroup.groupId]"><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
+  <span [routerLink]="['/dashboard/group', currentGroup.groupId]"><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
     <span class="nav-title">{{currentGroup.groupName}}</span>
   </span>
 </ng-template>

@@ -11,7 +11,7 @@
 <div class="content">
   <div *ngIf="!loading;else is_loading">
     <div *ngIf="groups;else no_groups">
-      <ons-list-item *ngFor="let group of groups" [routerLink]="['/group'], group.id" tappable (click)="closeMenu()">
+      <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.id]" tappable (click)="closeMenu()">
         <span class="menu-item">{{group.name}}</span>
       </ons-list-item>
     </div>
