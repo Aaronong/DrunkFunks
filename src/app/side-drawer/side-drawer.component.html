@@ -1,15 +1,18 @@
 <ons-toolbar>
-    <div class="left left-padded">Quick Links</div>
-    <div class="right">
-      <ons-icon class="back-btn" icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
-    </div>
-  </ons-toolbar>
-  <div class="background"></div>
-  <div class="content">
-    <ons-list-item [routerLink]="['/login']" tappable (click)="closeMenu()">Login</ons-list-item>
-    <ons-list-item [routerLink]="['/user', user.id]" tappable (click)="closeMenu()">Profile</ons-list-item>
-    <ons-list-item [routerLink]="['/dashboard']" tappable (click)="closeMenu()">Dashboard</ons-list-item>
-    <ons-list-item [routerLink]="['/about']" tappable (click)="closeMenu()">About</ons-list-item>
-    <ons-list-item [routerLink]="['/privacy']" tappable (click)="closeMenu()">Privacy</ons-list-item>
-    <ons-list-item [routerLink]="['/tos']" tappable (click)="closeMenu()">Terms</ons-list-item>
+  <div class="left left-padded">
+    <span class="menu-title">Aaron</span>
   </div>
+  <div class="left left-padded"><img src="../../alfred.png" alt="Onsen UI" class="menu-title-logo"></div>
+  <div class="right">
+    <ons-icon class="back-btn" icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
+  </div>
+</ons-toolbar>
+<div class="background"></div>
+<div class="content">
+  <ons-list-item [routerLink]="['/login']" tappable (click)="closeMenu()"><span class="menu-item">Login</span></ons-list-item>
+  <ons-list-item [routerLink]="['/user', user.id]" tappable (click)="closeMenu()"><span class="menu-item">Profile</span></ons-list-item>
+  <ons-list-item [routerLink]="['/dashboard']" tappable (click)="closeMenu()"><span class="menu-item">Dashboard</span></ons-list-item>
+  <ons-list-item [routerLink]="['/about']" tappable (click)="closeMenu()"><span class="menu-item">About</span></ons-list-item>
+  <ons-list-item [routerLink]="['/privacy']" tappable (click)="closeMenu()"><span class="menu-item">Privacy</span></ons-list-item>
+  <ons-list-item [routerLink]="['/tos']" tappable (click)="closeMenu()"><span class="menu-item">Terms</span></ons-list-item>
+</div>
