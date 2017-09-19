@@ -20,7 +20,7 @@
 
 <ons-popover direction="down" cancelable #popover (prehide)="onPreHide($event)">
   <ons-list>
-    <ons-list-item *ngIf="isLoggedIn;else login_item" [routerLink]="['/user', user.id]" tappable (click)="closeMenu()">
+    <ons-list-item *ngIf="isLoggedIn;else login_item" [routerLink]="['/user', user.id]" tappable>
       <span class="menu-item"><img [src]="loginService.getProfile().facebook.picture.data.url">{{loginService.getProfile().facebook.name}}</span>
     </ons-list-item>
     <ons-list-item *ngIf="isLoggedIn" [routerLink]="['/dashboard']" tappable><span class="menu-item">Dashboard</span></ons-list-item>
