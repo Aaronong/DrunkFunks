@@ -1,3 +1,16 @@
 .padded-left {
-    padding-left: 10px;
+  padding-left: 10px;
+}
+
+.menu-logo {
+  height: 90%;
+}
+
+.nav-title {
+  position: relative;
+  top: -13px;
+  left: 2px;
+  font-size: 1rem;
+  font-weight: 2000;
+  font-family: "Montserrat", sans-serif;
 }

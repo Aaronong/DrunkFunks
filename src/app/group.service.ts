@@ -3,9 +3,12 @@ import { Headers, Http } from '@angular/http';
 import { Group } from './group';
 import { User } from './user';
 import { MOCK_GROUPS } from './mock-groups';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable()
 export class GroupService {
+
+  private currentGroup = new Subject<Object>();
 
   constructor(private http: Http) { }
 
@@ -52,4 +55,14 @@ export class GroupService {
 
     return false;
   }
+
+  getCurrentGroupObservable(): Observable<Object> {
+    return this.currentGroup.asObservable();
+  }
+
+  // newGroup = {groupId, groupName}
+  updateCurrentGroup(newGroup) {
+    this.currentGroup.next(newGroup);
+  }
+
 }
