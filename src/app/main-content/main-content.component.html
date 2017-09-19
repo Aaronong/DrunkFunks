@@ -23,15 +23,15 @@
     <ons-list-item *ngIf="isLoggedIn;else login_item" [routerLink]="['/user', loginService.getProfile().alfred.userId]" tappable (click)="popover.hide()">
       <span class="menu-item"><img [src]="loginService.getProfile().facebook.picture.data.url">{{loginService.getProfile().facebook.name}}</span>
     </ons-list-item>
-    <ons-list-item *ngIf="isLoggedIn" [routerLink]="['/dashboard']" tappable><span class="menu-item" (click)="popover.hide()">Dashboard</span></ons-list-item>
-    <ons-list-item [routerLink]="['/about']" tappable><span class="menu-item" (click)="popover.hide()">About</span></ons-list-item>
-    <ons-list-item [routerLink]="['/privacy']" tappable><span class="menu-item" (click)="popover.hide()">Privacy</span></ons-list-item>
-    <ons-list-item [routerLink]="['/tos']" tappable><span class="menu-item" (click)="popover.hide()">Terms</span></ons-list-item>
+    <ons-list-item *ngIf="isLoggedIn" [routerLink]="['/dashboard']" tappable (click)="popover.hide()"><span class="menu-item">Dashboard</span></ons-list-item>
+    <ons-list-item [routerLink]="['/about']" tappable (click)="popover.hide()"><span class="menu-item">About</span></ons-list-item>
+    <ons-list-item [routerLink]="['/privacy']" tappable (click)="popover.hide()"><span class="menu-item">Privacy</span></ons-list-item>
+    <ons-list-item [routerLink]="['/tos']" tappable (click)="popover.hide()"><span class="menu-item">Terms</span></ons-list-item>
   </ons-list>
 </ons-popover>
 
 <ng-template #login_item>
-  <ons-list-item [routerLink]="['/login']" tappable><span class="menu-item" (click)="popover.hide()">Login</span></ons-list-item>
+  <ons-list-item [routerLink]="['/login']" tappable (click)="popover.hide()"><span class="menu-item">Login</span></ons-list-item>
 </ng-template>
 <ng-template #group_name>
   <span [routerLink]="['/dashboard/group', currentGroup.groupId]"><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
