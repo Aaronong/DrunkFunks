@@ -3,6 +3,7 @@ import { Headers, Http } from "@angular/http";
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from "ngx-facebook";
 import { Observable, Subject } from 'rxjs';
 import "rxjs/add/operator/toPromise";
+import * as ons from 'onsenui';
 
 @Injectable()
 export class LoginService {
@@ -112,6 +113,7 @@ export class LoginService {
       let responseJson = response.json();
       this.userProfile = responseJson.user;
       this.loggedIn.next(true);
+      ons.notification.toast('You are Logged In!', {timeout: 3000, modifier: 'green'});
     }).catch((error: any) => {
       console.error(error);
       this.logoutFromFacebook();
@@ -129,6 +131,7 @@ export class LoginService {
     (<any>window).localStorage.setItem("jwtToken", null);
 
     this.loggedIn.next(false);
+    ons.notification.toast('You are Logged Out!', {timeout: 3000, modifier: 'red'});
     this.fbService.logout().then(() => {
       // Nothing to do here
     }).catch((err) => {

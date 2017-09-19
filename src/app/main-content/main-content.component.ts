@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuService } from '../menu.service';
 import { LoginService } from '../login.service';
 import { GroupService } from '../group.service';
@@ -20,6 +21,7 @@ export class MainContentComponent implements OnInit {
     private menuService: MenuService,
     private loginService: LoginService,
     private groupService: GroupService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -38,10 +40,12 @@ export class MainContentComponent implements OnInit {
   openMenu() {
     if (this.isLoggedIn) {
       this.menuService.open();
+    } else {
+      this.router.navigate(["/main"]);
     }
   }
 
-  onPreHide() {
+  onPreHide(event) {
     // Reserved for canceling prehide
   }
 
