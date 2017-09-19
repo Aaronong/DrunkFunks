@@ -27,6 +27,9 @@
     <ons-list-item [routerLink]="['/about']" tappable (click)="popover.hide()"><span class="menu-item">About</span></ons-list-item>
     <ons-list-item [routerLink]="['/privacy']" tappable (click)="popover.hide()"><span class="menu-item">Privacy</span></ons-list-item>
     <ons-list-item [routerLink]="['/tos']" tappable (click)="popover.hide()"><span class="menu-item">Terms</span></ons-list-item>
+    <ons-list-item *ngIf="isLoggedIn" tappable (click)="popover.hide(); logoutFacebook();">
+        <span class="menu-item">Logout</span>
+    </ons-list-item>
   </ons-list>
 </ons-popover>
 

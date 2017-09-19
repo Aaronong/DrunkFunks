@@ -49,4 +49,8 @@ export class MainContentComponent implements OnInit {
     // Reserved for canceling prehide
   }
 
+  logoutFacebook() {
+    this.loginService.toggleFacebookLogin();
+  }
+
 }
