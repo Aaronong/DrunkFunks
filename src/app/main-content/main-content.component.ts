@@ -35,6 +35,11 @@ export class MainContentComponent implements OnInit {
         this.currentGroup = group;
       }
     )
+    if (this.loginService.getProfile()) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   openMenu() {
