@@ -63,8 +63,10 @@ export class LoginService {
 
   toggleFacebookLogin() {
     if (this.fbProfile === null) {
-      this.loginWithFacebookOnly();
+      console.log("login Facebook");
+      this.loginWithFacebook();
     } else {
+      console.log("logout Facebook");
       this.logoutFromFacebook();
     }
   }
@@ -105,28 +107,10 @@ export class LoginService {
       let jwtToken = response.json()["token"];
       this.jwtToken = jwtToken;
       (<any>window).localStorage.setItem("jwtToken", jwtToken);
-      return this._fetchNusreviewsProfile();
+      return this._fetchAlfredProfile();
     }).then((response) => {
       let responseJson = response.json();
       this.userProfile = responseJson.user;
-      this.loggedIn.next(true);
-    }).catch((error: any) => {
-      console.error(error);
-      this.logoutFromFacebook();
-    });
-  }
-
-  loginWithFacebookOnly() {
-    this.fbService.login(this.options).then((response: LoginResponse) => {
-      this.fbToken = response.authResponse.accessToken;
-      (<any>window).localStorage.setItem("fbToken", this.fbToken);
-      return this._fetchFacebookProfile();
-    }).then((fbProfile) => {
-      return this._generateServerTokens(this.fbToken, this.fbProfile);
-    }).then((response) => {
-      let jwtToken = response.json()["token"];
-      this.jwtToken = jwtToken;
-      (<any>window).localStorage.setItem("jwtToken", jwtToken);
       this.loggedIn.next(true);
     }).catch((error: any) => {
       console.error(error);
@@ -156,8 +140,8 @@ export class LoginService {
     return this.loggedIn.asObservable();
   }
 
-  _fetchNusreviewsProfile() {
-    return this.secureApiGet("https://api.nusreviews.com/profile").then((res) => {
+  _fetchAlfredProfile() {
+    return this.secureApiGet("https://api.thealfredbutler.com/profile").then((res) => {
       this.userProfile = res;
       (<any>window).localStorage.setItem("userProfile", JSON.stringify(res.json().user));
       return this.userProfile;

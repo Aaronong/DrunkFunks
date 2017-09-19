@@ -15,3 +15,6 @@ hr.divider{
 	border: 0;
 	box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
+.footer-copyright {
+    font-size: .75em;
+}
