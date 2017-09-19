@@ -1,7 +1,26 @@
 .left-padded {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 .back-btn {
-    vertical-align: 0%;   
-    padding-right: 5px;
+  vertical-align: 0%;
+  padding-right: 5px;
+}
+
+.menu-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+}
+
+.menu-title-logo {
+  height: 100%;
+}
+
+.menu-item {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: grey;
+  font-family: "Montserrat", sans-serif;
 }
