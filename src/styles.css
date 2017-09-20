@@ -46,3 +46,11 @@ body {
   line-height: 12px;
   font-size: 12px;
 }
+
+.button--green {
+  background-color: hsl(141, 71%, 48%);
+}
+
+.button--red {
+  background-color: hsl(356, 72%, 48%);
+}
