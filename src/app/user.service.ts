@@ -1,32 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { User } from './user';
-import { MOCK_USERS } from './mock-users';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+   }
 
-  getAllUsers(): Promise<User[]> {
-    return Promise.resolve(MOCK_USERS);
-  }
+  // getAllUsers(): Promise<User[]> {
+  //   return [Promise.resolve(MOCK_USERS);]
+  // }
 
   getUsersById(userId): Promise<User> {
-    var user = null;
-    var users = MOCK_USERS.filter(user => {
-      return user.id == userId;
-    })
-    if (users.length > 0) {
-      user = users[0];
-    }
-    return Promise.resolve(user);
+    return this.http.get('https://api.thealfredbutler.com/user/' + userId)
+    .toPromise()
+    .then(this.deserialiseJSONToUser)
+    .catch(this.handleError);
   }
 
-  getUsersByIdSlowly(userId): Promise<User> {
-      return new Promise(resolve => {
-          // Simulate server latency with 1 second delay
-          setTimeout(() => resolve(this.getUsersById(userId)), 3000);
-      });
+  // getUsersByIdSlowly(userId): Promise<User> {
+  //     return new Promise(resolve => {
+  //         // Simulate server latency with 1 second delay
+  //         setTimeout(() => resolve(this.getUsersById(userId)), 3000);
+  //     });
+  // }
+
+  private deserialiseJSONToUser(json): User {
+    let jsonArray = json.json()['user'];
+    let user = User.deserialiseJson(jsonArray);
+		return user;
+	}
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 }

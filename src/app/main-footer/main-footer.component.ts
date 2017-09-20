@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 
 @Component({
   selector: 'main-footer',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainFooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private fb: FacebookService,
+  ) { }
 
   ngOnInit() {
   }
-
 }

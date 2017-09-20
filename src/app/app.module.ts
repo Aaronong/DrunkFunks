@@ -9,6 +9,7 @@ import { MenuService } from './menu.service';
 import { LoginService } from './login.service';
 import { UserService } from './user.service';
 import { GroupService } from './group.service';
+import { GoogleAnalyticsEventsService } from "./google-analytics-events.service";
 
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -56,6 +57,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     LoginService,
     UserService,
     GroupService,
+    GoogleAnalyticsEventsService,
   ],
   bootstrap: [AppComponent],
   schemas: [

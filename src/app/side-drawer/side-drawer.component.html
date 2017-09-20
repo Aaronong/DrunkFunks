@@ -1,18 +1,31 @@
 <ons-toolbar>
   <div class="left left-padded">
-    <span class="menu-title">Aaron</span>
+    <img src="../../alfred.png" alt="Onsen UI" class="menu-title-logo">
+    <span class="menu-title valign">My Groups</span>
   </div>
-  <div class="left left-padded"><img src="../../alfred.png" alt="Onsen UI" class="menu-title-logo"></div>
   <div class="right">
     <ons-icon class="back-btn" icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
   </div>
 </ons-toolbar>
 <div class="background"></div>
 <div class="content">
-  <ons-list-item [routerLink]="['/login']" tappable (click)="closeMenu()"><span class="menu-item">Login</span></ons-list-item>
-  <ons-list-item [routerLink]="['/user', user.id]" tappable (click)="closeMenu()"><span class="menu-item">Profile</span></ons-list-item>
-  <ons-list-item [routerLink]="['/dashboard']" tappable (click)="closeMenu()"><span class="menu-item">Dashboard</span></ons-list-item>
-  <ons-list-item [routerLink]="['/about']" tappable (click)="closeMenu()"><span class="menu-item">About</span></ons-list-item>
-  <ons-list-item [routerLink]="['/privacy']" tappable (click)="closeMenu()"><span class="menu-item">Privacy</span></ons-list-item>
-  <ons-list-item [routerLink]="['/tos']" tappable (click)="closeMenu()"><span class="menu-item">Terms</span></ons-list-item>
+  <div *ngIf="!loading;else is_loading">
+    <div *ngIf="groups;else no_groups">
+      <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.groupId]" tappable (click)="closeMenu()">
+        <span class="menu-item">{{group.name}}</span>
+      </ons-list-item>
+    </div>
+  </div>
 </div>
+
+<ng-template #is_loading>
+  <ons-list-item>
+    <ons-progress-circular indeterminate></ons-progress-circular><span>Loading Groups...</span>
+  </ons-list-item>
+</ng-template>
+
+<ng-template #no_groups>
+  <ons-list-item>
+    <span>You have no Groups yet!</span>
+  </ons-list-item>
+</ng-template>

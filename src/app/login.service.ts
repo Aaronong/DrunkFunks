@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http } from "@angular/http";
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from "ngx-facebook";
+import { GroupService } from './group.service';
 import { Observable, Subject } from 'rxjs';
 import "rxjs/add/operator/toPromise";
+import * as ons from 'onsenui';
 
 @Injectable()
 export class LoginService {
@@ -14,6 +16,7 @@ export class LoginService {
   public fbToken: any = null;
   public jwtToken: any = null;
   private http: Http;
+  private groupService: GroupService;
   
   private loggedIn = new Subject<boolean>();
 
@@ -25,9 +28,11 @@ export class LoginService {
 
   constructor(
     fbService: FacebookService,
+    groupService: GroupService,
     http: Http
   ) { 
     this.fbService = fbService;
+    this.groupService = groupService;
     this.http = http;
 
     this.fbProfile = JSON.parse((<any>window).localStorage.getItem("fbProfile"));
@@ -62,7 +67,7 @@ export class LoginService {
   }
 
   toggleFacebookLogin() {
-    if (this.fbProfile === null || this.userProfile === null) {
+    if (this.fbProfile === null) {
       this.loginWithFacebook();
     } else {
       this.logoutFromFacebook();
@@ -105,11 +110,12 @@ export class LoginService {
       let jwtToken = response.json()["token"];
       this.jwtToken = jwtToken;
       (<any>window).localStorage.setItem("jwtToken", jwtToken);
-      return this._fetchNusreviewsProfile();
+      return this._fetchAlfredProfile();
     }).then((response) => {
       let responseJson = response.json();
       this.userProfile = responseJson.user;
       this.loggedIn.next(true);
+      ons.notification.toast('You are Logged In!', {timeout: 3000, modifier: 'green'});
     }).catch((error: any) => {
       console.error(error);
       this.logoutFromFacebook();
@@ -127,6 +133,8 @@ export class LoginService {
     (<any>window).localStorage.setItem("jwtToken", null);
 
     this.loggedIn.next(false);
+    this.groupService.updateCurrentGroup(null);
+    ons.notification.toast('You are Logged Out!', {timeout: 3000, modifier: 'red'});
     this.fbService.logout().then(() => {
       // Nothing to do here
     }).catch((err) => {
@@ -138,8 +146,8 @@ export class LoginService {
     return this.loggedIn.asObservable();
   }
 
-  _fetchNusreviewsProfile() {
-    return this.secureApiGet("https://api.nusreviews.com/profile").then((res) => {
+  _fetchAlfredProfile() {
+    return this.secureApiGet("https://api.thealfredbutler.com/profile").then((res) => {
       this.userProfile = res;
       (<any>window).localStorage.setItem("userProfile", JSON.stringify(res.json().user));
       return this.userProfile;
@@ -159,7 +167,7 @@ export class LoginService {
   }
 
   _generateServerTokens(fbToken: string, fbProfile: any) {
-    let url = "https://api.nusreviews.com/generateServerToken";
+    let url = "https://api.thealfredbutler.com/generateServerToken";
     let query = "?fbToken=" + fbToken +
                 "&email=" + fbProfile.email +
                 "&name=" + fbProfile.name + 

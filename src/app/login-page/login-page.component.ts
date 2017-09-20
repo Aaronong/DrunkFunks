@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
 import * as ons from 'onsenui';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-page',
@@ -8,13 +11,31 @@ import * as ons from 'onsenui';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  private subLogin: Subscription;
+
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+    this.subLogin = this.loginService.getLoggedInObservable().subscribe(
+      isLoggedIn => {
+        if (isLoggedIn) {
+          // redirect reactive
+          this.router.navigate(["/dashboard"]);
+        }
+      }
+    )
+
+    // if already logged in, redirect
+    if (this.loginService.getProfile() != null) {
+      this.router.navigate(["/dashboard"]);
+    }
   }
 
-  loginWithFacebook() {
-    ons.notification.toast('Login With Facebook', {timeout: 2000});
+  toggleFacebookLogin() {
+    this.loginService.toggleFacebookLogin(); 
   }
 
   signIn() {
