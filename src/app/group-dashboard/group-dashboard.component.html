@@ -1,7 +1,7 @@
 <div *ngIf="!loading;else loading_group">
 <div *ngIf="group;else no_group">
   <ons-card>
-    <ons-button [routerLink]="['/dashboard']" modifier="light small">Back</ons-button>
+    <ons-button [routerLink]="['/dashboard']" modifier="light small">Dashboard</ons-button>
     <div class="title top-padded">
       {{group.name}}
     </div>
@@ -10,8 +10,8 @@
       <div *ngIf="users;else loading_user">
       <div *ngIf="users.length>0;else no_user">
         <div *ngFor="let user of users">
-          <ons-list-item [routerLink]="['/user', user.id]" tappable>
-            <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{user.username}}</span></ons-list-item>
+          <ons-list-item [routerLink]="['/user', user.userId]" tappable>
+            <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{user.name}}</span></ons-list-item>
         </div>
       </div>
       </div>

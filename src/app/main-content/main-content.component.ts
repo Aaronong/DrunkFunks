@@ -31,8 +31,9 @@ export class MainContentComponent implements OnInit {
       }
     );
     this.subGroup = this.groupService.getCurrentGroupObservable().subscribe(
-      (group) => {
-        this.currentGroup = group;
+      (obj) => {
+        this.currentGroup = obj;
+        console.log(obj);
       }
     )
     if (this.loginService.getProfile()) {

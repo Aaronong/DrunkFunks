@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Group } from './group';
 import { User } from './user';
-import { MOCK_GROUPS } from './mock-groups';
 import { Subject, Observable } from 'rxjs';
 
 @Injectable()
@@ -10,16 +9,17 @@ export class GroupService {
 
   private currentGroup = new Subject<Object>();
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+  ) { }
 
-  getAllGroups(): Promise<Group[]> {
-    return Promise.resolve(MOCK_GROUPS);
-  }
+  // getAllGroups(): Promise<Group[]> {
+  //   return Promise.resolve(MOCK_GROUPS);
+  // }
 
   getGroupsByUserId(userId): Promise<Group[]> {
-    return Promise.resolve(MOCK_GROUPS.filter(group => {
-      return this.isInGroup(group, userId);
-    }));
+    return Promise.resolve([new Group(1, 'Test Group 1', 'password'),
+                            new Group(2, 'Gin Gang', 'password123')]);
   }
 
   getGroupsByUserIdSlowly(userId): Promise<Group[]> {
@@ -30,9 +30,13 @@ export class GroupService {
   }
 
   getGroupById(groupId): Promise<Group> {
-    return Promise.resolve(MOCK_GROUPS.find(group => {
-      return group.id == groupId;
-    }))
+    if (groupId == 1) {
+      return Promise.resolve(new Group(1, 'Group 1', 'password'));
+    } else if (groupId == 2) {
+      return Promise.resolve(new Group(2, 'Gin Gang', 'password123'));
+    } else {
+      return Promise.resolve(null);
+    }
   }
 
   getGroupByIdSlowly(groupId): Promise<Group> {
@@ -43,24 +47,25 @@ export class GroupService {
   }
 
   isInGroup(group: Group, userId): boolean {
-    if (group.owner == userId) {
-      return true;
-    }
+    // if (group.owner == userId) {
+    //   return true;
+    // }
 
-    for (let member of group.members) {
-      if (member.id == userId) {
-        return true;
-      }
-    }
+    // for (let member of group.members) {
+    //   if (member.id == userId) {
+    //     return true;
+    //   }
+    // }
 
-    return false;
+    // return false;
+    return true;
   }
 
   getCurrentGroupObservable(): Observable<Object> {
     return this.currentGroup.asObservable();
   }
 
-  // newGroup = {groupId, groupName}
+  // newGroup = {groupName, routerLink}
   updateCurrentGroup(newGroup) {
     this.currentGroup.next(newGroup);
   }

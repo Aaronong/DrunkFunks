@@ -3,7 +3,7 @@
 <ons-card>
   <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="User Profile Picture" style="width: 100%">
   <div class="center title">
-    {{user.username}}
+    {{user.name}}
   </div>
   <div class="content">
     <ons-list-header>Details</ons-list-header>
@@ -13,17 +13,12 @@
     </ons-list-item>
     <ons-list-item>
       <ons-icon class="back-btn" icon="ion-ios-telephone" size="30px" fixed-width="true" (click)="closeMenu()"></ons-icon> 
-      <span>{{user.contact}}</span>
+      <span>{{user.contactNumber}}</span>
     </ons-list-item>
     <ons-list-item>
       <ons-icon class="back-btn" icon="ion-android-home" size="30px" fixed-width="true" (click)="closeMenu()"></ons-icon> 
       <span>{{user.address}}</span>
     </ons-list-item>
-    <div *ngIf="isOwner">
-      <div class="right-top-padded" (click)="edit()">
-        <ons-button>Edit</ons-button>
-      </div>
-    </div>
   </div>
 </ons-card>
 </div>

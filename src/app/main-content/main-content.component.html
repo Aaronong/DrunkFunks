@@ -1,9 +1,11 @@
 <ons-page>
   <ons-toolbar>
-    <div class="left padded-left" *ngIf="!currentGroup;else group_name" (click)="openMenu()">
-      <span><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
-        <span class="nav-title">Alfred</span>
-      </span>
+    <div class="left padded-left">
+      <div *ngIf="!currentGroup;else group_name">
+        <span><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo" (click)="openMenu()">
+          <span class="nav-title">Alfred</span>
+        </span>
+      </div>
     </div>
     <div class="right">
       <ons-toolbar-button #button (click)="popover.show(button)">
@@ -37,7 +39,9 @@
   <ons-list-item [routerLink]="['/login']" tappable (click)="popover.hide()"><span class="menu-item">Login</span></ons-list-item>
 </ng-template>
 <ng-template #group_name>
-  <span [routerLink]="['/dashboard/group', currentGroup.groupId]"><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo">
-    <span class="nav-title">{{currentGroup.groupName}}</span>
-  </span>
+  <div>
+    <span><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo" (click)="openMenu()">
+      <span class="nav-title" [routerLink]="currentGroup.routerLink">{{currentGroup.groupName}}</span>
+    </span>
+  </div>
 </ng-template>

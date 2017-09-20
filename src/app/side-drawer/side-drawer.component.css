@@ -19,7 +19,8 @@
 }
 
 .menu-title-logo {
-  height: 100%;
+  height: 40px;
+  width: 32px;
 }
 
 .menu-item {
@@ -28,4 +29,8 @@
   font-weight: 500;
   color: grey;
   font-family: "Montserrat", sans-serif;
+}
+
+.valign {
+  vertical-align: 25%;
 }

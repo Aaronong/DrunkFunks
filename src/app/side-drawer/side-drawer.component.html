@@ -1,7 +1,7 @@
 <ons-toolbar>
-  <div class="right right-padded">
+  <div class="left left-padded">
     <img src="../../alfred.png" alt="Onsen UI" class="menu-title-logo">
-    <span class="menu-title">Your Groups</span>
+    <span class="menu-title valign">My Groups</span>
   </div>
   <div class="right">
     <ons-icon class="back-btn" icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
@@ -11,7 +11,7 @@
 <div class="content">
   <div *ngIf="!loading;else is_loading">
     <div *ngIf="groups;else no_groups">
-      <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.id]" tappable (click)="closeMenu()">
+      <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.groupId]" tappable (click)="closeMenu()">
         <span class="menu-item">{{group.name}}</span>
       </ons-list-item>
     </div>

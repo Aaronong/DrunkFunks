@@ -20,12 +20,12 @@ export class DashboardComponent implements OnInit {
     private groupService: GroupService,
     private loginService: LoginService,
     private router: Router,
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit() {
-    this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
-      this.groups = groups;
-    })
+    // Listen for logout
     this.subLogin = this.loginService.getLoggedInObservable().subscribe(
       isLoggedIn => {
         if (!isLoggedIn) {
@@ -35,13 +35,22 @@ export class DashboardComponent implements OnInit {
       }
     )
 
+    // Redirect to login if not logged in
     if (this.loginService.getProfile() == null) {
       this.router.navigate(["/login"]);
+      return;
     }
+
+    // Publish to all group listeners
+    this.groupService.updateCurrentGroup({groupName: "Dashboard", routerLink: ['/dashboard']});
+
+    this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
+      this.groups = groups;
+    })
   }
 
   enterGroup(group) {
-    this.router.navigate(['/dashboard/group', group.id]);
+    this.router.navigate(['/dashboard/group', group.groupId]);
   }
 
   newGroup() {

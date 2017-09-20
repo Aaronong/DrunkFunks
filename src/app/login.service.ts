@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http } from "@angular/http";
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from "ngx-facebook";
+import { GroupService } from './group.service';
 import { Observable, Subject } from 'rxjs';
 import "rxjs/add/operator/toPromise";
 import * as ons from 'onsenui';
@@ -15,6 +16,7 @@ export class LoginService {
   public fbToken: any = null;
   public jwtToken: any = null;
   private http: Http;
+  private groupService: GroupService;
   
   private loggedIn = new Subject<boolean>();
 
@@ -26,9 +28,11 @@ export class LoginService {
 
   constructor(
     fbService: FacebookService,
+    groupService: GroupService,
     http: Http
   ) { 
     this.fbService = fbService;
+    this.groupService = groupService;
     this.http = http;
 
     this.fbProfile = JSON.parse((<any>window).localStorage.getItem("fbProfile"));
@@ -64,10 +68,8 @@ export class LoginService {
 
   toggleFacebookLogin() {
     if (this.fbProfile === null) {
-      console.log("login Facebook");
       this.loginWithFacebook();
     } else {
-      console.log("logout Facebook");
       this.logoutFromFacebook();
     }
   }
@@ -131,6 +133,7 @@ export class LoginService {
     (<any>window).localStorage.setItem("jwtToken", null);
 
     this.loggedIn.next(false);
+    this.groupService.updateCurrentGroup(null);
     ons.notification.toast('You are Logged Out!', {timeout: 3000, modifier: 'red'});
     this.fbService.logout().then(() => {
       // Nothing to do here
