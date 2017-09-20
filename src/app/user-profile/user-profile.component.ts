@@ -46,12 +46,26 @@ export class UserProfileComponent implements OnInit {
     this.route.paramMap
     .switchMap((params: ParamMap) => this.userService.getUsersById(+params.get('id')))
     .subscribe(user => {
-      this.loading = false;
+      if (!user) {
+        this.user = null;
+        return;
+      }
       this.user = user;
+
       if (this.user.userId == this.loginService.getProfile().alfred.userId) {
         this.isOwner = true;
       }
-      console.log({user: this.user, isOwner: this.isOwner});
+      
+      if (!this.isOwner) {
+        if (!this.user.contactNumber) {
+          this.user.contactNumber = "Not Available";
+        }
+        if (!this.user.address) {
+          this.user.address = "Not Available";
+        }
+      }
+
+      this.loading = false;
     });
   }
 

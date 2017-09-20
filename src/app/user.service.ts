@@ -5,10 +5,7 @@ import { User } from './user';
 @Injectable()
 export class UserService {
 
-  public debug: Object;
-
   constructor(private http: Http) {
-    (<any>window).userService = this;
    }
 
   // getAllUsers(): Promise<User[]> {
@@ -30,10 +27,8 @@ export class UserService {
   // }
 
   private deserialiseJSONToUser(json): User {
-    console.log(json);
-    this.debug = json.dataValues;
-    let user = User.deserialiseJson(json);
-    console.log(user);
+    let jsonArray = json.json()['user'];
+    let user = User.deserialiseJson(jsonArray);
 		return user;
 	}
 

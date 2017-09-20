@@ -1,7 +1,7 @@
 <div *ngIf="!loading;else loading_user">
 <div *ngIf="user;else no_user">
 <ons-card>
-  <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="User Profile Picture" style="width: 100%">
+  <img [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=large'" alt="https://monaca.io/img/logos/download_image_onsenui_01.png">
   <div class="center title">
     {{user.name}}
   </div>
