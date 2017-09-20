@@ -40,33 +40,35 @@ export class UserProfileComponent implements OnInit {
     if (this.loginService.getProfile() == null) {
       // Else redirect to login
       this.router.navigate(["/login"]);
+      return;
     }
 
     this.loading = true;
     this.route.paramMap
     .switchMap((params: ParamMap) => this.userService.getUsersById(+params.get('id')))
     .subscribe(user => {
-      if (!user) {
+      if (user == null) {
         this.user = null;
-        return;
-      }
-      this.user = user;
-
-      if (this.user.userId == this.loginService.getProfile().alfred.userId) {
-        this.isOwner = true;
-      }
-      
-      if (!this.isOwner) {
-        if (!this.user.contactNumber) {
-          this.user.contactNumber = "Not Available";
+        this.loading = false;
+      } else {
+        this.user = user; 
+        if (this.user.userId == this.loginService.getProfile().alfred.userId) {
+          this.isOwner = true;
         }
-        if (!this.user.address) {
-          this.user.address = "Not Available";
+        if (!this.isOwner) {
+          if (!this.user.contactNumber) {
+            this.user.contactNumber = "Not Available";
+          }
+          if (!this.user.address) {
+            this.user.address = "Not Available";
+          }
         }
+        this.loading = false;
       }
-
-      this.loading = false;
     });
   }
 
+  saveChanges() {
+    console.log(this.user);
+  }
 }

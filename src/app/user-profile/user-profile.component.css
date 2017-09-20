@@ -1,4 +1,31 @@
-.right-top-padded {
-    text-align: right;
+.top-padded {
     padding-top: 10px;
+}
+
+.left-padded {
+    padding-left: 10px;
+}
+
+.title {
+    font-size: 24px;
+    padding: 0px 0px 5px 0px;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.thumbnail {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.input-area {
+    width: 250px;
+    height: 40px;
+    line-height: 40px;
 }

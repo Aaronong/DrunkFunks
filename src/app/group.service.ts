@@ -31,7 +31,7 @@ export class GroupService {
 
   getGroupById(groupId): Promise<Group> {
     if (groupId == 1) {
-      return Promise.resolve(new Group(1, 'Group 1', 'password'));
+      return Promise.resolve(new Group(1, 'Test Group 1', 'password'));
     } else if (groupId == 2) {
       return Promise.resolve(new Group(2, 'Gin Gang', 'password123'));
     } else {

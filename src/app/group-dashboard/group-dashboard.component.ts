@@ -49,23 +49,26 @@ export class GroupDashboardComponent implements OnInit {
     .switchMap((params: ParamMap) => this.groupService.getGroupByIdSlowly(+params.get('id')))
     .subscribe(group => {
       this.loading = false;
+      if (group == null) {
+        this.group = null;
+        return
+      }
 
       if (!this.groupService.isInGroup(group, this.loginService.getPlaceHolderUser())) {
         // Prevent unauthorized access
         this.group = null;
-        return;
+      } else {
+        // Publish to group listeners
+        this.groupService.updateCurrentGroup({groupName: group.name, routerLink: ['/dashboard/group', group.groupId]});
+        this.group = group;
+        // Debug Users (Mock Data)
+        this.users = [
+          new User(1, "1871358646211109@thealfredbutler.com",
+            "Sky Levis", 1871358646211109, null, null, null, null),
+          new User(2, "loojane_1995@hotmail.com", "See Loo Jane", 10155560371024404,
+          null, null, null, null),
+        ]
       }
-
-      // Publish to group listeners
-      this.groupService.updateCurrentGroup({groupName: group.name, routerLink: ['/dashboard/group', group.groupId]});
-      this.group = group;
-      // Debug Users (Mock Data)
-      this.users = [
-        new User(1, "1871358646211109@thealfredbutler.com",
-          "Sky Levis", 1871358646211109, null, null, null, null),
-        new User(2, "loojane_1995@hotmail.com", "See Loo Jane", 10155560371024404,
-         null, null, null, null),
-      ]
     });
   }
 }

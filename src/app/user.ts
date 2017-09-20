@@ -30,6 +30,9 @@ export class User {
     }
 
     public static deserialiseJson(jsonObject: JSON): User {
+        if (jsonObject == null) {
+            return null;
+        }
         let user = new User(
             jsonObject['userId'],
             jsonObject['fid'],

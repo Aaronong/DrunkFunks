@@ -15,6 +15,9 @@ export class Group {
     }
 
     public static deserialiseJson(jsonObject: JSON): Group {
+        if (jsonObject == null) {
+            return null;
+        }
         let group = new Group(
             jsonObject['groupId'],
             jsonObject['name'],
