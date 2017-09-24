@@ -1,31 +1,44 @@
-.margin-top {
-    margin-top: 5px;
+.button-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
 
-.left-padded {
-    padding-left: 10px;
+.button-blue {
+  background-color: #2a82bd;
+}
+
+.button-reject {
+  background-color: #c0c0c0;
+}
+
+.button-accept {
+  background-color: #284253;
+}
+
+.modal-text {
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-title {
+  font-family: "Montserrat", sans-serif;
+}
+
+.margin-top {
+  margin-top: 5px;
 }
 
 .padded {
-    padding: 5px;
-}
-
-.bottom-margin {
-    margin-bottom: 10px;
+  padding: 5px;
 }
 
 .input-area {
-    width: 275px;
-    height: 40px;  
-    border: 2px solid #37404b;
-    border-radius: 5px;
-    font-weight: 500;
-}
-
-.enlarge-text {
-    font-size: 16px;
+  width: 80%;
+  height: 40px;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 10%;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
