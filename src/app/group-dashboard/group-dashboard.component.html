@@ -1,23 +1,24 @@
 <div *ngIf="!loading;else loading_group">
-<div *ngIf="group;else no_group">
-  <ons-card>
-    <ons-button [routerLink]="['/dashboard']" modifier="light small">Dashboard</ons-button>
-    <div class="title top-padded">
-      {{group.name}}
-    </div>
-    <div class="content">
-      <ons-list-header>Users in Group</ons-list-header>
-      <div *ngIf="users;else loading_user">
-      <div *ngIf="users.length>0;else no_user">
-        <div *ngFor="let user of users">
-          <ons-list-item [routerLink]="['/user', user.userId]" tappable>
-            <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{user.name}}</span></ons-list-item>
+  <div *ngIf="group;else no_group">
+    <ons-card>
+      <div class="title top-padded">
+        {{group.name}}
+      </div>
+      <div class="content">
+        <div *ngIf="users;else loading_user">
+          <div *ngIf="users.length>0;else no_user">
+            <div *ngFor="let user of users">
+              <ons-list-item [routerLink]="['/user', user.userId]" tappable>
+                <img class="user-profile-pic" [src]="loginService.getProfile().facebook.picture.data.url">
+                <span class="user-name">{{user.name}}</span>
+
+              </ons-list-item>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
-  </ons-card>
-</div>
+    </ons-card>
+  </div>
 </div>
 <!-- NG Templates -->
 <ng-template #no_group>

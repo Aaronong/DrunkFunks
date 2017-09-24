@@ -1,31 +1,40 @@
 .top-padded {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
-.left-padded {
-    padding-left: 10px;
+.left-margin {
+  margin-left: 10px;
 }
 
 .title {
-    font-size: 24px;
-    padding: 0px 0px 5px 0px;
+  font-size: 24px;
+  padding: 0px 0px 5px 0px;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 .thumbnail {
-    max-width: 400px;
-    max-height: 400px;
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 10px;
 }
 
 .input-area {
-    width: 250px;
-    height: 40px;
-    line-height: 40px;
+  width: 230px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.colour-blue {
+  background-color: #284253 !important;
+}
+
+.font-blue {
+  color: #3498db;
 }

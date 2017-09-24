@@ -1,5 +1,5 @@
 .right-padded {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
 .left-padded {
@@ -9,6 +9,7 @@
 .back-btn {
   vertical-align: 0%;
   padding-right: 5px;
+  color: white;
 }
 
 .menu-title {
@@ -16,6 +17,7 @@
   font-size: 1rem;
   font-weight: 500;
   font-family: "Montserrat", sans-serif;
+  color: white;
 }
 
 .menu-title-logo {
@@ -33,4 +35,12 @@
 
 .valign {
   vertical-align: 25%;
+}
+
+.toolbar {
+  background-color: #284253;
+}
+
+.plus-icon {
+  color: grey;
 }
