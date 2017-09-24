@@ -9,6 +9,7 @@
 .back-btn {
   vertical-align: 0%;
   padding-right: 5px;
+  color: white;
 }
 
 .menu-title {
@@ -16,6 +17,7 @@
   font-size: 1rem;
   font-weight: 500;
   font-family: "Montserrat", sans-serif;
+  color: white;
 }
 
 .menu-title-logo {

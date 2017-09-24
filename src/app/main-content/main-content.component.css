@@ -3,10 +3,10 @@
 }
 
 .menu-logo {
-  height: 40px;
-  width: 32px;
+  height: 36px;
+  width: 28px;
   position: relative;
-  top: 8px;
+  top: 4px;
 }
 
 .nav-title {
@@ -15,6 +15,7 @@
   left: 2px;
   font-size: 1rem;
   /* color: #3498db; */
+  color: white;
   font-weight: 2000;
   font-family: "Montserrat", sans-serif;
 }
@@ -42,4 +43,8 @@
 
 .toolbar {
   background-color: #2e3e49;
+}
+
+.menu-button {
+  color: white;
 }

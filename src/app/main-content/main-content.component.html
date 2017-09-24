@@ -9,7 +9,7 @@
     </div>
     <div class="right">
       <ons-toolbar-button #button (click)="popover.show(button)">
-        <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+        <ons-icon class="menu-button" icon="ion-navicon, material:md-menu"></ons-icon>
       </ons-toolbar-button>
     </div>
   </ons-toolbar>
@@ -44,7 +44,7 @@
 </ng-template>
 <ng-template #group_name>
   <div>
-    <span><img src="../../assets/alfred-black.png" alt="Onsen UI" class="menu-logo" (click)="openMenu()">
+    <span><img src="../../assets/alfred-logo.png" alt="Onsen UI" class="menu-logo" (click)="openMenu()">
       <span class="nav-title" [routerLink]="currentGroup.routerLink">{{currentGroup.groupName}}</span>
     </span>
   </div>
