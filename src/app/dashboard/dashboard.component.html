@@ -1,24 +1,19 @@
 <ons-card>
-  <div class="title">
-    Join a Group
-  </div>
-  <div class="content">
-    <div class="center">
-      <span>Join your friend's group and let Alfred take care of you after your night out.</span><br>
-      <ons-button class="margin-top" (click)="modal_join.show(); resetModal();">Join</ons-button>
-    </div>
+  <br/>
+  <div class="content center">
+    <img src="../../assets/alfred-black.png" alt="Alfred Logo" style="width: 50%">
+    <br/>
+    <ons-button class="margin-top button-text button-blue" (click)="modal_join.show(); resetModal();">Join Group</ons-button>
+    <ons-button class="margin-top button-text button-blue" (click)="modal_create.show(); resetModal();">Create Group</ons-button>
   </div>
 </ons-card>
+
 <ons-list>
   <ons-list-header>My Groups</ons-list-header>
-  <ons-list-item tappable (click)="modal_create.show(); resetModal()">
-    <ons-icon icon="ion-plus" size="30px" fixed-width="true"></ons-icon>
-    <span>Create New Group</span>
-  </ons-list-item>
   <div *ngIf="groups;else loading_groups">
     <div *ngFor="let group of groups">
-    <ons-list-item tappable (click)="enterGroup(group)">
-      <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{group.name}}</span></ons-list-item>
+      <ons-list-item tappable (click)="enterGroup(group)">
+        <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{group.name}}</span></ons-list-item>
     </div>
   </div>
 </ons-list>
@@ -31,18 +26,18 @@
 <!-- Modal -->
 <ons-modal #modal_create animation="fade">
   <ons-card style="color: black;">
-    <div class="title">
+    <div class="title modal-title">
       Create a Group
     </div>
     <div class="content">
-      <p>Create a group and ask your friends to join and let Alfred take care of the group!</p>
-      <div class="left-padded">
-        <ons-input class="input-area left-padded bottom-margin enlarge-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
-        <ons-input class="input-area left-padded bottom-margin enlarge-text" placeholder="Password here (min. 8 characters)" type="password" [(value)]="modalGroup.password"></ons-input>
+      <p class="modal-text">Hire Alfred to take care of your friends!</p>
+      <div>
+        <ons-input class="input-area modal-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
+        <ons-input class="input-area modal-text" placeholder="Password here (min. 8 characters)" type="password" [(value)]="modalGroup.password"></ons-input>
       </div>
       <div class="center">
-        <ons-button modifier="red" (click)="modal_create.hide()">Cancel</ons-button>
-        <ons-button modifier="green" (click)="modal_create.hide(); createGroup();">Create</ons-button>
+        <ons-button class="margin-top button-text button-reject" (click)="modal_create.hide()">Cancel</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="modal_create.hide(); createGroup();">Create</ons-button>
       </div>
     </div>
   </ons-card>
@@ -50,18 +45,18 @@
 
 <ons-modal #modal_join animation="fade">
   <ons-card style="color: black;">
-    <div class="title">
+    <div class="title modal-title">
       Join a Group
     </div>
     <div class="content">
-      <p>Create a group and ask your friends to join and let Alfred take care of the group!</p>
-      <div class="left-padded">
-        <ons-input class="input-area left-padded bottom-margin enlarge-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
-        <ons-input class="input-area left-padded bottom-margin enlarge-text" placeholder="Password here!" type="password" [(value)]="modalGroup.password"></ons-input>
+      <p class="modal-text">Join a group of friends on Alfred!</p>
+      <div>
+        <ons-input class="input-area modal-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
+        <ons-input class="input-area modal-text" placeholder="Password here!" type="password" [(value)]="modalGroup.password"></ons-input>
       </div>
       <div class="center">
-        <ons-button modifier="red" (click)="modal_join.hide()">Cancel</ons-button>
-        <ons-button modifier="green" (click)="modal_join.hide(); joinGroup();">Join</ons-button>
+        <ons-button class="margin-top button-text button-reject" (click)="modal_join.hide()">Cancel</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="modal_join.hide(); joinGroup();">Join</ons-button>
       </div>
     </div>
   </ons-card>

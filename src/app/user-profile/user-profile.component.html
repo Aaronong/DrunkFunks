@@ -1,40 +1,41 @@
 <div *ngIf="!loading;else loading_user">
-<div *ngIf="user;else no_user">
-<div *ngIf ="isOwner;else view_user">
-  <ons-card>
-    <div class="center">
-      <img class="thumbnail" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=large'" alt="https://monaca.io/img/logos/download_image_onsenui_01.png">
-      <div class="title">
-        {{user.name}}
-      </div>
+  <div *ngIf="user;else no_user">
+    <div *ngIf="isOwner;else view_user">
+      <ons-card>
+        <div class="center">
+          <img class="thumbnail" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=large'" alt="https://monaca.io/img/logos/download_image_onsenui_01.png">
+          <div class="title">
+            {{user.name}}
+          </div>
+        </div>
+        <div class="content">
+          <ons-list-item>
+            <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
+            <span>
+              <ons-input class="input-area left-margin" placeholder="Enter your email here!" [(value)]="user.email"></ons-input>
+            </span>
+          </ons-list-item>
+          <ons-list-item>
+            <a [href]="'tel:' + user.contactNumber">
+              <ons-icon class="font-blue" icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
+            </a>
+            <span>
+          <ons-input class="input-area left-margin" placeholder="Enter your contact number here!" [(value)]="user.contactNumber"></ons-input>
+        </span>
+          </ons-list-item>
+          <ons-list-item>
+            <ons-icon class="font-blue" icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
+            <span>
+          <ons-input class="input-area left-margin" placeholder="Enter your address here!" [(value)]="user.address"></ons-input>
+        </span>
+          </ons-list-item>
+          <div class="right top-padded">
+            <ons-button modifier="cta" class="colour-blue" (click)="saveChanges()">Save Changes</ons-button>
+          </div>
+        </div>
+      </ons-card>
     </div>
-    <div class="content">
-      <ons-list-header>Edit Your Details Here</ons-list-header>
-      <ons-list-item>
-        <ons-icon icon="ion-email" size="30px" fixed-width="true"></ons-icon> 
-        <span>
-          <ons-input class="input-area left-padded" placeholder="Enter your email here!" [(value)]="user.email"></ons-input>
-        </span>
-      </ons-list-item>
-      <ons-list-item>
-        <ons-icon icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon> 
-        <span>
-          <ons-input class="input-area left-padded" placeholder="Enter your contact number here!" [(value)]="user.contactNumber"></ons-input>
-        </span>
-      </ons-list-item>
-      <ons-list-item>
-        <ons-icon icon="ion-android-home" size="30px" fixed-width="true"></ons-icon> 
-        <span>
-          <ons-input class="input-area left-padded" placeholder="Enter your address here!" [(value)]="user.address"></ons-input>
-        </span>
-      </ons-list-item>
-      <div class="right top-padded">
-        <ons-button modifier="cta" (click)="saveChanges()">Save Changes</ons-button>
-      </div>
-    </div>
-  </ons-card>
-</div>
-</div>
+  </div>
 </div>
 <!-- NG Templates -->
 <ng-template #loading_user>
@@ -62,16 +63,18 @@
     <div class="content">
       <ons-list-header>Details</ons-list-header>
       <ons-list-item>
-        <ons-icon icon="ion-email" size="30px" fixed-width="true"></ons-icon> 
-        <span class="left-padded">{{user.email}}</span>
+        <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
+        <span class="left-margin">{{user.email}}</span>
       </ons-list-item>
       <ons-list-item>
-        <ons-icon icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon> 
-        <span class="left-padded">{{user.contactNumber}}</span>
+        <a [href]="'tel:' + 'user.contactNumber'">
+          <ons-icon class="font-blue" icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
+        </a>
+        <span class="left-margin">{{user.contactNumber}}</span>
       </ons-list-item>
       <ons-list-item>
-        <ons-icon icon="ion-android-home" size="30px" fixed-width="true"></ons-icon> 
-        <span class="left-padded">{{user.address}}</span>
+        <ons-icon class="font-blue" icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
+        <span class="left-margin">{{user.address}}</span>
       </ons-list-item>
     </div>
   </ons-card>

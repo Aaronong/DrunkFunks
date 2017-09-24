@@ -1,14 +1,18 @@
 import { Injectable } from "@angular/core";
 import { Headers, Http } from "@angular/http";
-import { FacebookService, InitParams, LoginResponse, LoginOptions } from "ngx-facebook";
-import { GroupService } from './group.service';
-import { Observable, Subject } from 'rxjs';
+import {
+  FacebookService,
+  InitParams,
+  LoginResponse,
+  LoginOptions
+} from "ngx-facebook";
+import { GroupService } from "./group.service";
+import { Observable, Subject } from "rxjs";
 import "rxjs/add/operator/toPromise";
-import * as ons from 'onsenui';
+import * as ons from "onsenui";
 
 @Injectable()
 export class LoginService {
-
   public fbService: FacebookService;
   public fbProfile: any = null;
   public userProfile: any = null;
@@ -17,7 +21,7 @@ export class LoginService {
   public jwtToken: any = null;
   private http: Http;
   private groupService: GroupService;
-  
+
   private loggedIn = new Subject<boolean>();
 
   private options: LoginOptions = {
@@ -30,17 +34,26 @@ export class LoginService {
     fbService: FacebookService,
     groupService: GroupService,
     http: Http
-  ) { 
+  ) {
     this.fbService = fbService;
     this.groupService = groupService;
     this.http = http;
 
-    this.fbProfile = JSON.parse((<any>window).localStorage.getItem("fbProfile"));
-    this.userProfile = JSON.parse((<any>window).localStorage.getItem("userProfile"));
+    this.fbProfile = JSON.parse(
+      (<any>window).localStorage.getItem("fbProfile")
+    );
+    this.userProfile = JSON.parse(
+      (<any>window).localStorage.getItem("userProfile")
+    );
     this.fbToken = (<any>window).localStorage.getItem("fbToken");
     this.jwtToken = (<any>window).localStorage.getItem("jwtToken");
 
-    if (this.fbProfile !== null && this.userProfile !== null && this.fbToken !== null && this.jwtToken !== null) {
+    if (
+      this.fbProfile !== null &&
+      this.userProfile !== null &&
+      this.fbToken !== null &&
+      this.jwtToken !== null
+    ) {
       this.loggedIn.next(true);
     }
 
@@ -77,49 +90,64 @@ export class LoginService {
   secureApiGet(url: string) {
     let headers = new Headers();
     headers.append("Authorization", "Bearer " + this.jwtToken);
-    return this.http.get(url, {
-      headers: headers
-    }).toPromise();
+    return this.http
+      .get(url, {
+        headers: headers
+      })
+      .toPromise();
   }
 
   secureApiPost(url: string, body: string) {
     let headers = new Headers();
-    headers.append("Authorization", "Bearer " + this.jwtToken); 
+    headers.append("Authorization", "Bearer " + this.jwtToken);
     headers.append("Content-Type", "application/json");
-    return this.http.post(url, body, {
-      headers: headers
-    }).toPromise();
+    return this.http
+      .post(url, body, {
+        headers: headers
+      })
+      .toPromise();
   }
 
   secureApiDelete(url: string) {
     let headers = new Headers();
-    headers.append("Authorization", "Bearer " + this.jwtToken); 
-    return this.http.delete(url, {
-      headers: headers
-    }).toPromise();
+    headers.append("Authorization", "Bearer " + this.jwtToken);
+    return this.http
+      .delete(url, {
+        headers: headers
+      })
+      .toPromise();
   }
 
   loginWithFacebook() {
-    this.fbService.login(this.options).then((response: LoginResponse) => {
-      this.fbToken = response.authResponse.accessToken;
-      (<any>window).localStorage.setItem("fbToken", this.fbToken);
-      return this._fetchFacebookProfile();
-    }).then((fbProfile) => {
-      return this._generateServerTokens(this.fbToken, this.fbProfile);
-    }).then((response) => {
-      let jwtToken = response.json()["token"];
-      this.jwtToken = jwtToken;
-      (<any>window).localStorage.setItem("jwtToken", jwtToken);
-      return this._fetchAlfredProfile();
-    }).then((response) => {
-      let responseJson = response.json();
-      this.userProfile = responseJson.user;
-      this.loggedIn.next(true);
-      ons.notification.toast('You are Logged In!', {timeout: 3000, modifier: 'green'});
-    }).catch((error: any) => {
-      console.error(error);
-      this.logoutFromFacebook();
-    });
+    this.fbService
+      .login(this.options)
+      .then((response: LoginResponse) => {
+        this.fbToken = response.authResponse.accessToken;
+        (<any>window).localStorage.setItem("fbToken", this.fbToken);
+        return this._fetchFacebookProfile();
+      })
+      .then(fbProfile => {
+        return this._generateServerTokens(this.fbToken, this.fbProfile);
+      })
+      .then(response => {
+        let jwtToken = response.json()["token"];
+        this.jwtToken = jwtToken;
+        (<any>window).localStorage.setItem("jwtToken", jwtToken);
+        return this._fetchAlfredProfile();
+      })
+      .then(response => {
+        let responseJson = response.json();
+        this.userProfile = responseJson.user;
+        this.loggedIn.next(true);
+        ons.notification.toast("You are Logged In!", {
+          timeout: 3000,
+          modifier: "green"
+        });
+      })
+      .catch((error: any) => {
+        console.error(error);
+        this.logoutFromFacebook();
+      });
   }
 
   logoutFromFacebook() {
@@ -134,12 +162,18 @@ export class LoginService {
 
     this.loggedIn.next(false);
     this.groupService.updateCurrentGroup(null);
-    ons.notification.toast('You are Logged Out!', {timeout: 3000, modifier: 'red'});
-    this.fbService.logout().then(() => {
-      // Nothing to do here
-    }).catch((err) => {
-      // Nothing to do here either
+    ons.notification.toast("You are Logged Out!", {
+      timeout: 3000,
+      modifier: "red"
     });
+    this.fbService
+      .logout()
+      .then(() => {
+        // Nothing to do here
+      })
+      .catch(err => {
+        // Nothing to do here either
+      });
   }
 
   getLoggedInObservable(): Observable<boolean> {
@@ -147,31 +181,44 @@ export class LoginService {
   }
 
   _fetchAlfredProfile() {
-    return this.secureApiGet("https://api.thealfredbutler.com/profile").then((res) => {
-      this.userProfile = res;
-      (<any>window).localStorage.setItem("userProfile", JSON.stringify(res.json().user));
-      return this.userProfile;
-    }).catch((err) => {
-      console.error(err);
-    });
+    return this.secureApiGet("https://api.thealfredbutler.com/profile")
+      .then(res => {
+        this.userProfile = res;
+        (<any>window).localStorage.setItem(
+          "userProfile",
+          JSON.stringify(res.json().user)
+        );
+        return this.userProfile;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   _fetchFacebookProfile() {
-    return this.fbService.api("/me?fields=id,email,name,picture").then((res) => {
-      this.fbProfile = res;
-      (<any>window).localStorage.setItem("fbProfile", JSON.stringify(res));
-      return this.fbProfile;
-    }).catch((err) => {
-      console.error(err);
-    });
+    return this.fbService
+      .api("/me?fields=id,email,name,picture")
+      .then(res => {
+        this.fbProfile = res;
+        (<any>window).localStorage.setItem("fbProfile", JSON.stringify(res));
+        return this.fbProfile;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   _generateServerTokens(fbToken: string, fbProfile: any) {
     let url = "https://api.thealfredbutler.com/generateServerToken";
-    let query = "?fbToken=" + fbToken +
-                "&email=" + fbProfile.email +
-                "&name=" + fbProfile.name + 
-                "&fid=" + fbProfile.id;
+    let query =
+      "?fbToken=" +
+      fbToken +
+      "&email=" +
+      fbProfile.email +
+      "&name=" +
+      fbProfile.name +
+      "&fid=" +
+      fbProfile.id;
 
     return this.http.get(url + query).toPromise();
   }

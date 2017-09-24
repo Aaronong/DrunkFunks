@@ -1,10 +1,9 @@
-<ons-toolbar>
+<ons-toolbar class="toolbar">
   <div class="left left-padded">
-    <img src="../../alfred.png" alt="Onsen UI" class="menu-title-logo">
     <span class="menu-title valign">My Groups</span>
   </div>
   <div class="right">
-    <ons-icon class="back-btn" icon="ion-arrow-right-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
+    <ons-icon class="back-btn" icon="ion-arrow-left-a" size="20px" fixed-width="true" (click)="closeMenu()"></ons-icon>
   </div>
 </ons-toolbar>
 <div class="background"></div>
@@ -13,6 +12,10 @@
     <div *ngIf="groups;else no_groups">
       <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.groupId]" tappable (click)="closeMenu()">
         <span class="menu-item">{{group.name}}</span>
+      </ons-list-item>
+      <ons-list-item [routerLink]="['/dashboard']" tappable (click)="closeMenu()">
+        <ons-icon class="plus-icon" icon="fa-plus-square-o" size="20px">
+        </ons-icon>
       </ons-list-item>
     </div>
   </div>
