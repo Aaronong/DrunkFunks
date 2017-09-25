@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { LoginService } from './login.service';
 import { User } from './user';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http) {
-   }
+  constructor(
+    private http: Http,
+    private loginService: LoginService,
+  ) {}
 
   // getAllUsers(): Promise<User[]> {
   //   return [Promise.resolve(MOCK_USERS);]
   // }
 
   getUsersById(userId): Promise<User> {
-    return this.http.get('https://api.thealfredbutler.com/user/' + userId)
-    .toPromise()
+    return this.loginService.secureApiGet('https://api.thealfredbutler.com/user/profile/' + userId)
+    //return this.http.get('https://api.thealfredbutler.com/user/profile/' + userId)
+    //.toPromise()
     .then(this.deserialiseJSONToUser)
     .catch(this.handleError);
   }
