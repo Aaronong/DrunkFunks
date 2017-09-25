@@ -55,6 +55,7 @@ export class MainContentComponent implements OnInit {
   }
 
   logoutFacebook() {
+    this.groupService.updateCurrentGroup(null);
     this.loginService.toggleFacebookLogin();
   }
 

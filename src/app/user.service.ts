@@ -29,7 +29,8 @@ export class UserService {
   }
 
   updateUserProfile(updateUser) {
-    this.loginService.secureApiPost("https://api.thealfredbutler.com/user/update", JSON.stringify(updateUser)).then((res) => {
+    this.loginService.secureApiPost("https://api.thealfredbutler.com/user/update", JSON.stringify(updateUser))
+    .then((res) => {
       console.log(res);
 			if (res.json()['status'] == 'success') {
         ons.notification.toast("Changes Saved!", {
@@ -84,6 +85,25 @@ export class UserService {
       updateUser.latitude = null;
       return this.updateUserProfile(updateUser);
     });
+  }
+
+  joinGroup(newGroup): Promise<number> {
+    return this.loginService.secureApiPost("https://api.thealfredbutler.com/membership/create", JSON.stringify(newGroup))
+    .then(res => {
+      if (res.json()['status'] == 'success') {
+        ons.notification.toast("Joined Group!", {
+          timeout: 3000,
+          modifier: "green"
+        });
+        return res.json()['groupId'];
+			} else if (res.json()['status'] == 'error') {
+        ons.notification.toast("An error occurred!", {
+          timeout: 3000,
+          modifier: "red"
+        });
+        return null;
+			}	
+    })
   }
 
   public getUserObservable(): Observable<boolean> {
