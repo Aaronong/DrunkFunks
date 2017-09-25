@@ -58,9 +58,14 @@ export class SideDrawerComponent implements OnInit {
   ngOnInit() {
     if (this.loginService.getProfile()) {
       this.loading = true;
-      this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
+      this.groupService.getGroupsOfUser()
+      .then(groups => {
         this.loading = false;
-        this.groups = groups;
+        if (groups) {
+          this.groups = groups;
+        } else {
+          this.groups = [];
+        }        
       })
     }
   }

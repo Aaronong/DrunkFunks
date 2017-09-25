@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupService } from '../group.service';
-import { UserService } from '../user.service';
 import { LoginService } from '../login.service';
 import { Group } from '../group';
 import { Subscription } from 'rxjs';
@@ -20,7 +19,6 @@ export class DashboardComponent implements OnInit {
   @ViewChild("modal_loading") modalLoading;
 
   private subLogin: Subscription;
-  private subGroupChange: Subscription;
 
   public modalGroup = {
     name: "",
@@ -29,7 +27,6 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private groupService: GroupService,
-    private userService: UserService,
     private loginService: LoginService,
     private router: Router,
   ) {
@@ -44,19 +41,6 @@ export class DashboardComponent implements OnInit {
           // Redirect to login if logged out
           this.router.navigate(["/login"]);
         }
-      }
-    )
-
-    this.subGroupChange = this.groupService.getChangeGroupObservable().subscribe(
-      groupChange => {
-        if (groupChange) {
-          if (groupChange == 'name taken') {
-            this.modalCreate.nativeElement.show();
-          } else {
-            this.router.navigate(["/dashboard/group", groupChange]);
-          }
-        }
-        this.modalLoading.nativeElement.hide();
       }
     )
 
@@ -101,20 +85,35 @@ export class DashboardComponent implements OnInit {
     }
 
     console.log(this.modalGroup);
-    this.groupService.createGroup(this.modalGroup);
     this.modalCreate.nativeElement.hide();
     this.modalLoading.nativeElement.show();
+    this.groupService.createGroup(this.modalGroup)
+    .then(response => {
+      if (response) {
+        if (response == 'name taken') {
+          this.modalCreate.nativeElement.show();
+        } else {
+          this.router.navigate(["/dashboard/group", response]);
+        }
+      }
+      this.modalLoading.nativeElement.hide();
+    })
   }
 
   joinGroup() {
     console.log(this.modalGroup);
     this.modalJoin.nativeElement.hide();
     this.modalLoading.nativeElement.show();
-    this.userService.joinGroup(this.modalGroup)
+    this.groupService.joinGroup(this.modalGroup)
     .then(groupId => {
       this.modalLoading.nativeElement.hide();
       if (groupId) {
-        this.router.navigate(['dashboard/group', groupId]);
+        if (groupId == -1) {
+          // Incorrect Password
+          this.modalJoin.nativeElement.show();
+        } else {
+          this.router.navigate(['dashboard/group', groupId]);
+        }
       }
     });
   }

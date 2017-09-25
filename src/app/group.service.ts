@@ -10,16 +10,12 @@ import * as ons from "onsenui";
 export class GroupService {
 
   private currentGroup = new Subject<Object>();
-  private changeGroup = new Subject<string>();
+  private changeGroup = new Subject<boolean>();
 
   constructor(
     private http: Http,
     private loginService: LoginService,
   ) { }
-
-  // getAllGroups(): Promise<Group[]> {
-  //   return Promise.resolve(MOCK_GROUPS);
-  // }
 
   getGroupsOfUser(): Promise<Group[]> {
     return this.loginService.secureApiGet('https://api.thealfredbutler.com/membership')
@@ -66,8 +62,8 @@ export class GroupService {
     return true;
   }
 
-  createGroup(newGroup) {
-    this.loginService.secureApiPost("https://api.thealfredbutler.com/group/create", JSON.stringify(newGroup))
+  createGroup(newGroup): Promise<string> {
+    return this.loginService.secureApiPost("https://api.thealfredbutler.com/group/create", JSON.stringify(newGroup))
     .then((res) => {
       console.log(res);
 			if (res.json()['status'] == 'success') {
@@ -75,28 +71,56 @@ export class GroupService {
           timeout: 3000,
           modifier: "green"
         });
-        this.changeGroup.next(res.json()['groupId']);
+        this.changeGroup.next(true);
+        return res.json()['groupId'];
       } else if (res.json()['status'] == 'name taken') {
         ons.notification.toast("Name Taken!", {
           timeout: 3000,
           modifier: "red"
         });
-        this.changeGroup.next("name taken");
+        this.changeGroup.next(false);
+        return "name taken";
 			} else if (res.json()['status'] == 'error') {
         ons.notification.toast("An error occurred!", {
           timeout: 3000,
           modifier: "red"
         });
-        this.changeGroup.next(null);
+        this.changeGroup.next(false);
+        return null;
 			}	
 		});
+  }
+
+  joinGroup(newGroup): Promise<number> {
+    return this.loginService.secureApiPost("https://api.thealfredbutler.com/membership/create", JSON.stringify(newGroup))
+    .then(res => {
+      if (res.json()['status'] == 'success') {
+        ons.notification.toast("Joined Group!", {
+          timeout: 3000,
+          modifier: "green"
+        });
+        return res.json()['groupId'];
+      } else if (res.json()['status'] == 'incorrect password') {
+        ons.notification.toast("Incorrect Password!", {
+          timeout: 3000,
+          modifier: "red"
+        })
+        return -1;
+			} else if (res.json()['status'] == 'error') {
+        ons.notification.toast("An error occurred!", {
+          timeout: 3000,
+          modifier: "red"
+        });
+        return null;
+			}	
+    })
   }
 
   getCurrentGroupObservable(): Observable<Object> {
     return this.currentGroup.asObservable();
   }
 
-  getChangeGroupObservable(): Observable<string> {
+  getChangeGroupObservable(): Observable<boolean> {
     return this.changeGroup.asObservable();
   }
 

@@ -9,7 +9,7 @@
 <div class="background"></div>
 <div class="content">
   <div *ngIf="!loading;else is_loading">
-    <div *ngIf="groups;else no_groups">
+    <div *ngIf="groups.length>0;else no_groups">
       <ons-list-item *ngFor="let group of groups" [routerLink]="['/dashboard/group', group.groupId]" tappable (click)="closeMenu()">
         <span class="menu-item">{{group.name}}</span>
       </ons-list-item>
@@ -31,6 +31,6 @@
 
 <ng-template #no_groups>
   <ons-list-item>
-    <span>You have no Groups yet!</span>
+    <span>No Groups Yet!</span>
   </ons-list-item>
 </ng-template>
