@@ -32,5 +32,11 @@
 <ng-template #no_groups>
   <ons-list-item>
     <span>No Groups Yet!</span>
+    <div *ngIf="!inDashboard">
+      <ons-list-item [routerLink]="['/dashboard']" tappable (click)="closeMenu()">
+        <ons-icon class="plus-icon" icon="fa-plus-square-o" size="20px">
+        </ons-icon><span class="menu-item left-padded">Join/Create</span>
+      </ons-list-item>
+    </div>
   </ons-list-item>
 </ng-template>
