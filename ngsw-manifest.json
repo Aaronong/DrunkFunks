@@ -4,38 +4,41 @@
           {"url": "https://fonts.googleapis.com/css?family=Montserrat:300,500,700"}
       ]
   },
+    "static.ignore": [
+      "^\/assets\/ignore.*$"
+    ],
   "routing": {
       "index": "/index.html",
       "routes": {
           "/": {
-              "prefix": false
+              "match": "exact"
           },
           "/main": {
-              "prefix": false
+              "match": "exact"
           },
           "/about": {
-              "prefix": false
+              "match": "exact"
           },
           "/privacy": {
-              "prefix": false
+              "match": "exact"
           },
           "/login": {
-            "prefix": false
+              "match": "exact"
           },
           "/tos": {
-            "prefix": false
+              "match": "exact"
           },
           "/404": {
-            "prefix": false
+              "match": "exact"
           },
           "/dashboard": {
-            "prefix": false
-          },
-          "/user": {
-            "prefix": true
+              "match": "exact"
           },
           "/dashboard/group": {
-            "prefix": true
+              "match": "prefix"
+          },
+          "/user": {
+              "match": "prefix"
           }
       }
   }

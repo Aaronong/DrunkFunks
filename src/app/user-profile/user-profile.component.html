@@ -10,24 +10,21 @@
         </div>
         <div class="content">
           <ons-list-item>
-            <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
-            <span>
-              <ons-input class="input-area left-margin" placeholder="Enter your email here!" [(value)]="user.email"></ons-input>
-            </span>
+            <div *ngIf="validEmail;else invalid_mail">
+              <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
+            </div>
+            <ons-input class="input-area left-margin" placeholder="Eg: alfred@gmail.com" [(value)]="user.email"></ons-input>
           </ons-list-item>
           <ons-list-item>
-            <a [href]="'tel:' + user.contactNumber">
+            <div *ngIf="validNumber;else invalid_number">
               <ons-icon class="font-blue" icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
-            </a>
-            <span>
-          <ons-input class="input-area left-margin" placeholder="Enter your contact number here!" [(value)]="user.contactNumber"></ons-input>
-        </span>
+            </div>
+            <ons-input class="input-area left-margin" placeholder="Eg: 91237654" type="number" [(value)]="user.contactNumber"></ons-input>
           </ons-list-item>
           <ons-list-item>
-            <ons-icon class="font-blue" icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
-            <span>
-          <ons-input class="input-area left-margin" placeholder="Enter your address here!" [(value)]="user.address"></ons-input>
-        </span>
+            <ons-icon icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
+            <textarea class="input-area left-margin medium-font" placeholder="Eg: Reflections At Keppel Bay, Singapore" [(value)]="user.address"></textarea>
+            <span><small>*This address is used for cabbing you home!</small></span>
           </ons-list-item>
           <div class="right top-padded">
             <ons-button modifier="cta" class="colour-blue" (click)="saveChanges()">Save Changes</ons-button>
@@ -63,19 +60,33 @@
     <div class="content">
       <ons-list-header>Details</ons-list-header>
       <ons-list-item>
-        <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
-        <span class="left-margin">{{user.email}}</span>
+        <div *ngIf="validMail;else invalid_mail">
+          <a [href]="'mailto:' + user.email">
+            <ons-icon class="font-blue" icon="ion-email" size="30px" fixed-width="true"></ons-icon>
+          </a>
+        </div>
+        <div class="left-margin">{{user.email}}</div>
       </ons-list-item>
       <ons-list-item>
-        <a [href]="'tel:' + 'user.contactNumber'">
-          <ons-icon class="font-blue" icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
-        </a>
-        <span class="left-margin">{{user.contactNumber}}</span>
+        <div *ngIf="validNumber;else invalid_number">
+          <a [href]="'tel:' + 'user.contactNumber'">
+            <ons-icon class="font-blue" icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
+          </a>
+        </div>
+        <div class="left-margin">{{user.contactNumber}}</div>
       </ons-list-item>
       <ons-list-item>
-        <ons-icon class="font-blue" icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
-        <span class="left-margin">{{user.address}}</span>
+        <ons-icon icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
+        <div class="left-margin">
+          {{user.address}}
+        </div>
       </ons-list-item>
     </div>
   </ons-card>
+</ng-template>
+<ng-template #invalid_mail>
+  <ons-icon icon="ion-email" size="30px" fixed-width="true"></ons-icon>
+</ng-template>
+<ng-template #invalid_number>
+  <ons-icon icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
 </ng-template>

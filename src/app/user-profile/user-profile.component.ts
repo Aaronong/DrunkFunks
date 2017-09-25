@@ -17,6 +17,8 @@ export class UserProfileComponent implements OnInit {
   isOwner: boolean = false;
   loading: boolean = true;
   subLogin: Subscription;
+  validMail = false;
+  validNumber = false;
 
   constructor(
     private userService: UserService,
@@ -43,6 +45,8 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
+    this.validMail = false;
+    this.validNumber = false;
     this.loading = true;
     this.route.paramMap
     .switchMap((params: ParamMap) => this.userService.getUsersById(+params.get('id')))
@@ -52,9 +56,22 @@ export class UserProfileComponent implements OnInit {
         this.loading = false;
       } else {
         this.user = user; 
+        // Check User Object
         if (this.user.userId == this.loginService.getProfile().alfred.userId) {
           this.isOwner = true;
         }
+        if (this.user.email) {
+          if ((this.user.email.indexOf("@thealfredbutler.com") == -1) && (this.user.email.length > 0)) {
+            this.validMail = true;
+          }
+        }
+        if (this.user.contactNumber) {
+          this.user.contactNumber = this.user.contactNumber.trim().replace(" ", "");
+          if (this.user.contactNumber.length > 0) {
+            this.validNumber = true;
+          }
+        }
+        // Check owner
         if (!this.isOwner) {
           if (!this.user.contactNumber) {
             this.user.contactNumber = "Not Available";

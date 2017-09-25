@@ -9,9 +9,8 @@
           <div *ngIf="users.length>0;else no_user">
             <div *ngFor="let user of users">
               <ons-list-item [routerLink]="['/user', user.userId]" tappable>
-                <img class="user-profile-pic" [src]="loginService.getProfile().facebook.picture.data.url">
+                <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
                 <span class="user-name">{{user.name}}</span>
-
               </ons-list-item>
             </div>
           </div>

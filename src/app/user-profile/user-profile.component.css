@@ -27,8 +27,12 @@
 
 .input-area {
   width: 230px;
-  height: 40px;
+  min-height: 40px;
   line-height: 40px;
+}
+
+.medium-font {
+  font-size: 15px;
 }
 
 .colour-blue {

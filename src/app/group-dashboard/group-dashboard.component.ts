@@ -45,6 +45,7 @@ export class GroupDashboardComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.route.paramMap
     .switchMap((params: ParamMap) => this.groupService.getGroupByIdSlowly(+params.get('id')))
     .subscribe(group => {
@@ -63,9 +64,9 @@ export class GroupDashboardComponent implements OnInit {
         this.group = group;
         // Debug Users (Mock Data)
         this.users = [
-          new User(1, "1871358646211109@thealfredbutler.com",
-            "Sky Levis", 1871358646211109, null, null, null, null),
-          new User(2, "loojane_1995@hotmail.com", "See Loo Jane", 10155560371024404,
+          new User(1, 1871358646211109,
+            "Sky Levis", "1871358646211109@thealfredbutler.com", null, null, null, null),
+          new User(2, 10155560371024404, "See Loo Jane", "loojane_1995@hotmail.com",
           null, null, null, null),
         ]
       }

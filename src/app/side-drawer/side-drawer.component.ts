@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs';
 export class SideDrawerComponent implements OnInit {
 
   private subLogin: Subscription;
+  private subGroup: Subscription;
+  public inDashboard: boolean;
   public isLoggedIn = false;
   public groups: Group[] = null;
   public loading = true; 
@@ -35,10 +37,22 @@ export class SideDrawerComponent implements OnInit {
         } else {
           this.closeMenu();
           this.groups = null;
-
         }
       }
-    )
+    );
+    this.subGroup = this.groupService.getCurrentGroupObservable().subscribe(
+      currentGroup => {
+        if (currentGroup) {
+          if (currentGroup["groupName"] == "Dashboard") {
+            this.inDashboard = true;
+          } else {
+            this.inDashboard = false;
+          }
+        } else {
+          this.inDashboard = false;
+        }
+      }
+    );
    }
 
   ngOnInit() {
