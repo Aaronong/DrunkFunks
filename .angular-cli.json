@@ -10,6 +10,7 @@
       "assets": [
         "assets",
         "favicon.ico",
+        "alfred.png",
         "manifest.json"
       ],
       "index": "index.html",
