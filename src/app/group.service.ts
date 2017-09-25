@@ -99,18 +99,21 @@ export class GroupService {
           timeout: 3000,
           modifier: "green"
         });
+        this.changeGroup.next(true);
         return res.json()['groupId'];
       } else if (res.json()['status'] == 'incorrect password') {
         ons.notification.toast("Incorrect Password!", {
           timeout: 3000,
           modifier: "red"
         })
+        this.changeGroup.next(false);
         return -1;
 			} else if (res.json()['status'] == 'error') {
         ons.notification.toast("An error occurred!", {
           timeout: 3000,
           modifier: "red"
         });
+        this.changeGroup.next(false);
         return null;
 			}	
     })
