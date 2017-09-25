@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../user';
 import { UserService } from '../user.service'
 import { LoginService } from '../login.service';
@@ -13,12 +13,17 @@ import { Subscription } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
+  @ViewChild('address') address;
+  @ViewChild('modal_loading') modalLoading;
+
   user: User = null;
   isOwner: boolean = false;
   loading: boolean = true;
-  subLogin: Subscription;
   validMail = false;
   validNumber = false;
+
+  private subLogin: Subscription;
+  private subUser: Subscription;
 
   constructor(
     private userService: UserService,
@@ -33,6 +38,11 @@ export class UserProfileComponent implements OnInit {
           // Else redirect to login
           this.router.navigate(["/login"]);
         }
+      }
+    )
+    this.subUser = this.userService.getUserObservable().subscribe(
+      userUpdated => {
+        this.modalLoading.nativeElement.hide();
       }
     )
    }
@@ -86,6 +96,27 @@ export class UserProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    console.log(this.user);
+    this.user.address = this.address.nativeElement.value;
+    if (this.user.address) {
+      if (this.user.address.trim().length == 0) {
+        this.user.address = null;
+      }
+    }
+    
+    var updateUser = {
+      email: this.user.email,
+      contact_number: this.user.contactNumber,
+      address: this.user.address,
+      latitude: null,
+      longitude: null,
+    };
+    if (this.user.address) {
+      this.userService.getGeoCodeAndUpdate(updateUser);
+    } else {
+      this.userService.updateUserProfile(updateUser);
+    }
+    
+    // Engage loading block
+    this.modalLoading.nativeElement.show();
   }
 }

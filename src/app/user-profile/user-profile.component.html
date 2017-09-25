@@ -23,7 +23,7 @@
           </ons-list-item>
           <ons-list-item>
             <ons-icon icon="ion-android-home" size="30px" fixed-width="true"></ons-icon>
-            <textarea class="input-area left-margin medium-font" placeholder="Eg: Reflections At Keppel Bay, Singapore" [(value)]="user.address"></textarea>
+            <textarea id="address" class="input-area left-margin medium-font" placeholder="Eg: Reflections At Keppel Bay, Singapore" #address>{{user.address}}</textarea>
             <span><small>*This address is used for cabbing you home!</small></span>
           </ons-list-item>
           <div class="right top-padded">
@@ -90,3 +90,11 @@
 <ng-template #invalid_number>
   <ons-icon icon="ion-ios-telephone" size="30px" fixed-width="true"></ons-icon>
 </ng-template>
+
+<ons-modal #modal_loading animation="fade">
+  <ons-card class="loading-block">
+    <div class="center">
+      <h2>Updating...</h2>
+    </div>
+  </ons-card>
+</ons-modal>

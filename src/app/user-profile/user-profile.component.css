@@ -31,6 +31,11 @@
   line-height: 40px;
 }
 
+.loading-block {
+  color: white;
+  background: #2e3e49;
+}
+
 .medium-font {
   font-size: 15px;
 }

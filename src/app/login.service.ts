@@ -181,7 +181,7 @@ export class LoginService {
   }
 
   _fetchAlfredProfile() {
-    return this.secureApiGet("https://api.thealfredbutler.com/profile")
+    return this.secureApiGet("https://api.thealfredbutler.com/user/profile")
       .then(res => {
         this.userProfile = res;
         (<any>window).localStorage.setItem(
