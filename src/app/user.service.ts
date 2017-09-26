@@ -9,7 +9,7 @@ import { Observable, Subject } from "rxjs";
 export class UserService {
 
   private userUpdated = new Subject<boolean>();
-  private googleMapApiKey = "AIzaSyCMpuRlR_wcbQ28_13YFs1mEUl9Cl9Oni4"
+  //private googleMapApiKey = "AIzaSyCMpuRlR_wcbQ28_13YFs1mEUl9Cl9Oni4"
 
   constructor(
     private http: Http,
@@ -57,34 +57,31 @@ export class UserService {
     } else {
       return this.updateUserProfile(updateUser);
     }
-
-    if (treatedAddress.length == 0) {
-      return this.updateUserProfile(updateUser);
-    }
-
-    return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + treatedAddress 
-    + "&key=" + this.googleMapApiKey)
-    .toPromise()
-    .then(response => {
-      let json = response.json();
-      let results = json.results;
-      if (results.length > 0) {
-        let loc = json.results[0].geometry.location;
-        let lat = loc.lat;
-        let lng = loc.lng;
-        updateUser.longitude = lng;
-        updateUser.latitude = lat;
-        console.log(updateUser);
-        return this.updateUserProfile(updateUser);
-      } else {
-        return this.updateUserProfile(updateUser);
-      }
-    })
-    .catch(error => {
-      updateUser.longitude = null;
-      updateUser.latitude = null;
-      return this.updateUserProfile(updateUser);
-    });
+    
+    return this.updateUserProfile(updateUser);
+    // return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + treatedAddress 
+    // + "&key=" + this.googleMapApiKey)
+    // .toPromise()
+    // .then(response => {
+    //   let json = response.json();
+    //   let results = json.results;
+    //   if (results.length > 0) {
+    //     let loc = json.results[0].geometry.location;
+    //     let lat = loc.lat;
+    //     let lng = loc.lng;
+    //     updateUser.longitude = lng;
+    //     updateUser.latitude = lat;
+    //     console.log(updateUser);
+    //     return this.updateUserProfile(updateUser);
+    //   } else {
+    //     return this.updateUserProfile(updateUser);
+    //   }
+    // })
+    // .catch(error => {
+    //   updateUser.longitude = null;
+    //   updateUser.latitude = null;
+    //   return this.updateUserProfile(updateUser);
+    // });
   }
 
   public getUserObservable(): Observable<boolean> {

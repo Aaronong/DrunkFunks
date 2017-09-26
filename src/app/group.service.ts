@@ -23,45 +23,24 @@ export class GroupService {
     .catch(this.handleError);
   }
 
-  getGroupsByUserIdSlowly(userId): Promise<Group[]> {
-    return new Promise(resolve => {
-        // Simulate server latency with 1 second delay
-        //setTimeout(() => resolve(this.getGroupsByUserId(userId)), 2000);
-    });
-  }
-
   getGroupById(groupId): Promise<Group> {
     return this.loginService.secureApiGet('https://api.thealfredbutler.com/group/' + groupId)
     .then(this.deserialiseJSONToGroup)
     .catch(this.handleError);
   }
 
-  getGroupByIdSlowly(groupId): Promise<Group> {
-    return new Promise(resolve => {
-        // Simulate server latency with 1 second delay
-        setTimeout(() => resolve(this.getGroupById(groupId)), 2000);
-    });
-  }
-
-  isInGroup(group: Group, userId): boolean {
-    // if (group.owner == userId) {
-    //   return true;
-    // }
-
-    // for (let member of group.members) {
-    //   if (member.id == userId) {
-    //     return true;
-    //   }
-    // }
-
-    // return false;
-    return true;
+  isInGroup(groups: Group[], currentGroupId: number): boolean {
+    for (let group of groups) {
+      if (group.groupId == currentGroupId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   createGroup(newGroup): Promise<string> {
     return this.loginService.secureApiPost("https://api.thealfredbutler.com/group/create", JSON.stringify(newGroup))
     .then((res) => {
-      console.log(res);
 			if (res.json()['status'] == 'success') {
         ons.notification.toast("Group Created!", {
           timeout: 3000,
@@ -152,7 +131,6 @@ export class GroupService {
   private deserialiseJSONToGroup(json): Group {
     let groupArray = json.json()['group'];
     let group = Group.deserialiseJson(groupArray);
-		console.log(group);
 		return group;
   }
   
