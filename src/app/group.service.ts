@@ -24,20 +24,16 @@ export class GroupService {
   }
 
   getGroupsByUserIdSlowly(userId): Promise<Group[]> {
-      return new Promise(resolve => {
-          // Simulate server latency with 1 second delay
-          //setTimeout(() => resolve(this.getGroupsByUserId(userId)), 2000);
-      });
+    return new Promise(resolve => {
+        // Simulate server latency with 1 second delay
+        //setTimeout(() => resolve(this.getGroupsByUserId(userId)), 2000);
+    });
   }
 
   getGroupById(groupId): Promise<Group> {
-    if (groupId == 1) {
-      return Promise.resolve(new Group(1, 'Test Group 1', 'password'));
-    } else if (groupId == 2) {
-      return Promise.resolve(new Group(2, 'Gin Gang', 'password123'));
-    } else {
-      return Promise.resolve(null);
-    }
+    return this.loginService.secureApiGet('https://api.thealfredbutler.com/group/' + groupId)
+    .then(this.deserialiseJSONToGroup)
+    .catch(this.handleError);
   }
 
   getGroupByIdSlowly(groupId): Promise<Group> {
@@ -119,6 +115,27 @@ export class GroupService {
     })
   }
 
+  leaveGroup(group): Promise<boolean> {
+    return this.loginService.secureApiPost("https://api.thealfredbutler.com/membership/delete", JSON.stringify(group))
+    .then(res => {
+      if (res.json()['status'] == 'success') {
+        ons.notification.toast("Left Group!", {
+          timeout: 3000,
+          modifier: "red"
+        });
+        this.changeGroup.next(true);
+        return true;
+      } else if (res.json()['status'] == 'error') {
+        ons.notification.toast("An error occurred!", {
+          timeout: 3000,
+          modifier: "red"
+        });
+        this.changeGroup.next(false);
+        return false;
+      }
+    })
+  }
+
   getCurrentGroupObservable(): Observable<Object> {
     return this.currentGroup.asObservable();
   }
@@ -132,6 +149,13 @@ export class GroupService {
     this.currentGroup.next(newGroup);
   }
 
+  private deserialiseJSONToGroup(json): Group {
+    let groupArray = json.json()['group'];
+    let group = Group.deserialiseJson(groupArray);
+		console.log(group);
+		return group;
+  }
+  
   private deserialiseJSONToGroups(json): Group[] {
 		let jsonArray = json.json()['group'];
 		let groups = jsonArray.map(groupJSON => {

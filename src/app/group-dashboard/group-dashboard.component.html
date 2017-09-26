@@ -5,15 +5,22 @@
         {{group.name}}
       </div>
       <div class="content">
-        <div *ngIf="users;else loading_user">
-          <div *ngIf="users.length>0;else no_user">
+        <div *ngIf="users;else no_user">
+          <div *ngIf="users.length>0">
             <div *ngFor="let user of users">
               <ons-list-item [routerLink]="['/user', user.userId]" tappable>
                 <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
-                <span class="user-name">{{user.name}}</span>
+                <span class="user-name"><strong>{{user.name}}</strong></span>
+                <span *ngIf="user.userId == group.ownerId" class="owner-flag">(Owner)</span>
+                <span *ngIf="user.contactNumber;else no_contact" class="contact-number">({{user.contactNumber}})</span>
               </ons-list-item>
             </div>
           </div>
+        </div>
+      </div>
+      <div *ngIf="currentUserId != group.ownerId;else delete_group">
+        <div class="footer right">
+          <ons-button class="button-text button-blue" (click)="modal_leave.show()">Leave Group</ons-button>
         </div>
       </div>
     </ons-card>
@@ -23,7 +30,7 @@
 <ng-template #no_group>
   <ons-card>
     <div class="content">
-      <ons-icon icon="ion-ios-help" size="40px" fixed-width="true"></ons-icon>
+      <ons-icon icon="md-close-circle" size="40px" fixed-width="true"></ons-icon>
       <span>There is no such group.</span>
     </div>
   </ons-card>
@@ -41,5 +48,43 @@
 </ng-template>
 <ng-template #no_user>
   <ons-list-item>
+    <ons-icon icon="md-close-circle" size="30px" fixed-width="true"></ons-icon>
     <span>There are no users in this group!</span></ons-list-item>
 </ng-template>
+<ng-template #delete_group>
+  <div class="footer">
+    <ons-button class="right button-text button-blue" (click)="modal_delete.show()">Delete Group</ons-button>
+  </div>
+</ng-template>
+<ng-template #no_contact>
+  <span class="contact-number">(N/A)</span>
+</ng-template>
+<!-- Modals -->
+<ons-modal #modal_leave animation="fade">
+  <ons-card style="color: black;">
+    <div class="title modal-title">
+      Leave Group
+    </div>
+    <div *ngIf="group" class="content">
+      <p class="modal-text">Are you sure you want to leave {{group.name}}?</p>
+      <div class="center">
+        <ons-button class="margin-top button-text button-reject" (click)="modal_leave.hide()">Cancel</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="leaveGroup();">Leave</ons-button>
+      </div>
+    </div>
+  </ons-card>
+</ons-modal>
+<ons-modal #modal_delete animation="fade">
+  <ons-card style="color: black;">
+    <div class="title modal-title">
+      Delete Group
+    </div>
+    <div *ngIf="group" class="content">
+      <p class="modal-text">Are you sure you want to delete {{group.name}}? All users in the group will leave the group and this action is not reversible!</p>
+      <div class="center">
+        <ons-button class="margin-top button-text button-reject" (click)="modal_delete.hide()">Cancel</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="deleteGroup();">Delete</ons-button>
+      </div>
+    </div>
+  </ons-card>
+</ons-modal>

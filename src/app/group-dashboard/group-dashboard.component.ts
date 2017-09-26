@@ -19,6 +19,7 @@ export class GroupDashboardComponent implements OnInit {
 
   public loading = true;
   public subLogin: Subscription;
+  public currentUserId = 0;
 
   constructor(
     private loginService: LoginService,
@@ -43,11 +44,13 @@ export class GroupDashboardComponent implements OnInit {
     if (!this.loginService.getProfile()) {
       this.router.navigate(['/login']);
       return;
+    } else {
+      this.currentUserId = this.loginService.getProfile().alfred.userId;
     }
 
     this.loading = true;
     this.route.paramMap
-    .switchMap((params: ParamMap) => this.groupService.getGroupByIdSlowly(+params.get('id')))
+    .switchMap((params: ParamMap) => this.groupService.getGroupById(+params.get('id')))
     .subscribe(group => {
       this.loading = false;
       if (group == null) {
@@ -62,14 +65,26 @@ export class GroupDashboardComponent implements OnInit {
         // Publish to group listeners
         this.groupService.updateCurrentGroup({groupName: group.name, routerLink: ['/dashboard/group', group.groupId]});
         this.group = group;
-        // Debug Users (Mock Data)
-        this.users = [
-          new User(1, 1871358646211109,
-            "Sky Levis", "1871358646211109@thealfredbutler.com", null, null, null, null),
-          new User(2, 10155560371024404, "See Loo Jane", "loojane_1995@hotmail.com",
-          null, null, null, null),
-        ]
+        this.users = group.members;
       }
     });
+  }
+
+  leaveGroup() {
+    if (this.group) {
+      let leavingGroup = {
+        groupId: this.group.groupId
+      }
+      this.groupService.leaveGroup(leavingGroup)
+      .then(success => {
+        if (success) {
+          this.router.navigate(['/dashboard']); 
+        }
+      })
+    }
+  }
+
+  deleteGroup() {
+    this.leaveGroup();
   }
 }

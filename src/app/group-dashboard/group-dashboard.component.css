@@ -2,8 +2,20 @@
   padding-top: 8px;
 }
 
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
 * {
   font-family: "Montserrat", sans-serif;
+}
+
+.footer {
+  margin-top: 10px;
 }
 
 .user-profile-pic {
@@ -15,4 +27,30 @@
 .user-name {
   position: relative;
   left: 5px;
+  margin-right: 5px;
+}
+
+.contact-number {
+  padding-left: 10px;
+}
+
+.owner-flag {
+  padding-left: 10px;
+}
+
+.button-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+}
+
+.button-blue {
+  background-color: #2a82bd;
+}
+
+.button-reject {
+  background-color: #c0c0c0;
+}
+
+.button-accept {
+  background-color: #284253;
 }
