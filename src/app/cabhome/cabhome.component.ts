@@ -31,6 +31,7 @@ export class CabhomeComponent implements OnInit {
   private currentGroupId = 0;
   private subFetchedDirections: Subscription;
   private subGeoCoderReady: Subscription;
+  private subLogin: Subscription;
 
   constructor(
     private loginService: LoginService,
@@ -43,6 +44,21 @@ export class CabhomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Listen for logout
+    this.subLogin = this.loginService.getLoggedInObservable().subscribe(
+      isLoggedIn => {
+        if (!isLoggedIn) {
+          this.router.navigate(['/login']);
+        }
+      }
+    )
+
+    // Check if user is logged in
+    if (!this.loginService.getProfile()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.subFetchedDirections = this.directionsService.getFetchedDirectionsObservable().subscribe(
       fetched => {
         // Hide Loading
@@ -70,21 +86,20 @@ export class CabhomeComponent implements OnInit {
     this.waypoints = [];
     this.route.paramMap
     .switchMap((params: ParamMap) => {
-      //this.currentGroupId = +params.get('id');
-      this.currentGroupId = 2;
+      this.currentGroupId = +params.get('id');
       // Authentication
-      // return this.groupService.getGroupsOfUser().then(
-      //   groups => {
-      //     if (this.groupService.isInGroup(groups, this.currentGroupId)) {
-      //       return this.groupService.getGroupById(this.currentGroupId);
-      //     } else {
-      //       // Prevent unauthorized access
-      //       console.log("Unauthorized Access");
-      //       return null;
-      //     }
-      //   }
-      // )
-      return this.groupService.getGroupByIdDebug(this.currentGroupId);
+      return this.groupService.getGroupsOfUser().then(
+        groups => {
+          if (this.groupService.isInGroup(groups, this.currentGroupId)) {
+            return this.groupService.getGroupById(this.currentGroupId);
+          } else {
+            // Prevent unauthorized access
+            console.log("Unauthorized Access");
+            this.router.navigate(['/404']);
+            return;
+          }
+        }
+      )
     }).subscribe(
       group => {
         this.usersInGroup = group.members;
@@ -104,9 +119,6 @@ export class CabhomeComponent implements OnInit {
               this.uberTime = time;
             }
           });
-        // let currentAddr = this.directionsService.reverseGeoCode({
-        //   lat: position.coords.latitude, 
-        //   lng: position.coords.longitude})
 
         // When Done
         this.render = true;

@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'about', component: AboutPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'login', component: LoginPageComponent },
-  { path: 'dashboard/group/cab/1', component: CabhomeComponent },
+  { path: 'dashboard/group/cab/:id', component: CabhomeComponent },
   { path: 'dashboard/group/:id', component: GroupDashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user/:id', component: UserProfileComponent },
