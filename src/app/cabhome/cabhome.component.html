@@ -16,11 +16,19 @@
     <div *ngIf="usersInRoute.length > 0;else directions_disabled" class="center">
       <ons-button (click)="recalculate()">Get Directions</ons-button>
     </div>
+    <div class="center">
+      <ons-button modifier="uber" (click)="useUber()">
+        <img class="uber-logo" src="../../assets/uber-icon.png">
+        Ride Uber<span class="uber-time" *ngIf="uberTime>0">{{uberTime}} MIN</span>
+      </ons-button>
+    </div>
     <ons-list>
       <ons-list-header>Current Location</ons-list-header>
       <ons-list-item>
         <ons-icon icon="md-pin-drop" size="30px" fixed-width="true"></ons-icon>
-        <strong>S:</strong>( {{startingLocation.latitude.toFixed(3)}}, {{startingLocation.longitude.toFixed(3)}} )
+        <div *ngIf="!addr;else formatted_addr">
+          <strong>S:</strong>( {{startingLocation.latitude.toFixed(3)}}, {{startingLocation.longitude.toFixed(3)}} )
+        </div>
       </ons-list-item>
       <ons-list-header>Who's Going Home?</ons-list-header>
       <ons-list *ngFor="let user of usersInGroup">
@@ -55,6 +63,9 @@
   <ons-list-item class="indent text-disabled">
     <small>Not set.</small>
   </ons-list-item>
+</ng-template>
+<ng-template #formatted_addr>
+  <strong>S: </strong>{{addr}}
 </ng-template>
 
 <ons-modal #modal_loading animation="fade">

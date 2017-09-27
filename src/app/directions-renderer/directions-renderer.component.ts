@@ -34,6 +34,8 @@ export class DirectionsRendererComponent implements OnInit {
       this.currentMap = map;
       this.directionsRenderer = new google.maps.DirectionsRenderer;
       this.googleDirectionsService = new google.maps.DirectionsService;  
+      var geocoder = new google.maps.Geocoder;
+      this.directionsService.geoCoderIsReady(geocoder);
     })
     
     this.subNewDirections = this.directionsService.getNewDirectionsObservable().subscribe(

@@ -24,6 +24,23 @@ agm-map {
     width: 35px;
 }
 
+.uber-logo {
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+}
+
+.uber-time {
+    padding-left: 5px;
+    margin-left: 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-right-color: black;
+    border-top-color: black;
+    border-bottom: black;
+}
+
 .user-name {
     position: relative;
     left: 8px;

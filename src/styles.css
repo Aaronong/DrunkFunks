@@ -56,3 +56,9 @@ body {
 .button--red {
   background-color: hsl(356, 72%, 48%);
 }
+
+.button--uber {
+  background: black;
+  margin: 5px;
+  padding: 3px 8px 3px 10px;
+}

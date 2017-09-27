@@ -12,6 +12,7 @@ import { UserService } from './user.service';
 import { GroupService } from './group.service';
 import { DirectionsService } from './directions.service';
 import { GoogleAnalyticsEventsService } from "./google-analytics-events.service";
+import { GoogleMapsAPIWrapper } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -68,6 +69,7 @@ import { DirectionsRendererComponent } from './directions-renderer/directions-re
     GroupService,
     DirectionsService,
     GoogleAnalyticsEventsService,
+    GoogleMapsAPIWrapper,
   ],
   bootstrap: [AppComponent],
   schemas: [

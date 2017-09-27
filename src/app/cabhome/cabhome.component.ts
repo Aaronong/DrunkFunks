@@ -4,7 +4,10 @@ import { GroupService } from '../group.service';
 import { DirectionsService } from '../directions.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { User } from '../user';
+import { GoogleMapsAPIWrapper } from '@agm/core';
 import { Subscription } from 'rxjs';
+
+declare var google;
 
 @Component({
   selector: 'app-cabhome',
@@ -21,26 +24,45 @@ export class CabhomeComponent implements OnInit {
   public destination = null;
   public waypoints = [];
   public render = false;
+  public uberTime = -1;
 
+  public addr;
   public usersInRoute: User[];
   private currentGroupId = 0;
   private subFetchedDirections: Subscription;
+  private subGeoCoderReady: Subscription;
 
   constructor(
     private loginService: LoginService,
     private groupService: GroupService,
     private directionsService: DirectionsService,
+    private gmapsApi: GoogleMapsAPIWrapper,
     private route: ActivatedRoute,
     private router: Router,
   ) { 
   }
 
   ngOnInit() {
-    
     this.subFetchedDirections = this.directionsService.getFetchedDirectionsObservable().subscribe(
       fetched => {
         // Hide Loading
         this.modalLoading.nativeElement.hide();
+      }
+    )
+
+    this.subGeoCoderReady = this.directionsService.getGeoCoderObservable().subscribe(
+      response => {
+        if (response == '_ready') {
+          this.directionsService.reverseGeoCode(
+            {
+              lat: this.startingLocation.latitude, 
+              lng: this.startingLocation.longitude
+            }
+          )
+        } else {
+          this.addr = response;
+        }
+        
       }
     )
 
@@ -76,7 +98,15 @@ export class CabhomeComponent implements OnInit {
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(position => {
         this.startingLocation = position.coords;
-        //this.calculateRoute(this.usersInRoute);
+        this.directionsService.getUberTiming(position.coords.latitude, position.coords.longitude).then(
+          time => {
+            if (time > 0) {
+              this.uberTime = time;
+            }
+          });
+        // let currentAddr = this.directionsService.reverseGeoCode({
+        //   lat: position.coords.latitude, 
+        //   lng: position.coords.longitude})
 
         // When Done
         this.render = true;
@@ -185,5 +215,9 @@ export class CabhomeComponent implements OnInit {
     this.waypoints = [];
     this.destination = null;
     this.calculateRoute(this.usersInRoute);
+  }
+
+  useUber() {
+    window.location.href="https://m.uber.com/ul/?action=setPickup";
   }
 }
