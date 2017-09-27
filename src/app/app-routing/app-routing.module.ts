@@ -9,6 +9,7 @@ import { LoginPageComponent } from '../login-page/login-page.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { GroupDashboardComponent } from '../group-dashboard/group-dashboard.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { CabhomeComponent } from '../cabhome/cabhome.component';
 import { PageNotFoundComponent }   from '../page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'about', component: AboutPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },
   { path: 'login', component: LoginPageComponent },
+  { path: 'dashboard/group/cab/1', component: CabhomeComponent },
   { path: 'dashboard/group/:id', component: GroupDashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user/:id', component: UserProfileComponent },

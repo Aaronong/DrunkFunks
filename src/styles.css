@@ -22,6 +22,7 @@ body {
   width: 200px;
   border-radius: 30px;
   background-color: hsl(141, 71%, 48%);
+  margin-bottom: 16px;
 }
 .toast--green__message {
   margin: 0;
@@ -34,6 +35,7 @@ body {
   width: 200px;
   border-radius: 30px;
   background-color: hsl(356, 72%, 48%);
+  margin-bottom: 16px;
 }
 .toast--red__message {
   margin: 0;

@@ -29,6 +29,12 @@ export class GroupService {
     .catch(this.handleError);
   }
 
+  getGroupByIdDebug(groupId): Promise<Group> {
+    return this.loginService.secureApiGetDebug('https://api.thealfredbutler.com/group/' + groupId)
+    .then(this.deserialiseJSONToGroup)
+    .catch(this.handleError);
+  }
+
   isInGroup(groups: Group[], currentGroupId: number): boolean {
     for (let group of groups) {
       if (group.groupId == currentGroupId) {

@@ -1,0 +1,44 @@
+agm-map {
+    height: 300px;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.center {
+    text-align: center;
+}
+
+.content {
+    padding-top: 310px;
+}
+
+.user-profile-pic {
+    border-radius: 5px;
+    height: 35px;
+    width: 35px;
+}
+
+.user-name {
+    position: relative;
+    left: 8px;
+    margin-right: 5px;
+}
+
+.loading-block {
+    color: white;
+    background: #2e3e49;
+}
+
+.indent {
+    margin-top: -16px;
+}
+
+.text-disabled {
+    color: lightgrey;
+}

@@ -4,11 +4,13 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { OnsenModule } from 'ngx-onsenui';
 import { HttpModule } from '@angular/http';
 import { FacebookModule } from 'ngx-facebook';
+import { AgmCoreModule } from '@agm/core';
 
 import { MenuService } from './menu.service';
 import { LoginService } from './login.service';
 import { UserService } from './user.service';
 import { GroupService } from './group.service';
+import { DirectionsService } from './directions.service';
 import { GoogleAnalyticsEventsService } from "./google-analytics-events.service";
 
 import { AppComponent } from './app.component';
@@ -27,6 +29,8 @@ import { GroupDashboardComponent } from './group-dashboard/group-dashboard.compo
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import { CabhomeComponent } from './cabhome/cabhome.component';
+import { DirectionsRendererComponent } from './directions-renderer/directions-renderer.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,8 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     UserProfileComponent,
     DashboardComponent,
     CreateGroupComponent,
+    CabhomeComponent,
+    DirectionsRendererComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,12 +57,16 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     OnsenModule,
     HttpModule,
     FacebookModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyC8u1kP6YBsr68jScWoTYozC9ZXj8nu9pQ'
+    })
   ],
   providers: [
     MenuService,
     LoginService,
     UserService,
     GroupService,
+    DirectionsService,
     GoogleAnalyticsEventsService,
   ],
   bootstrap: [AppComponent],
