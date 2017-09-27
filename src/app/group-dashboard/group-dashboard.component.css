@@ -30,12 +30,15 @@
   margin-right: 5px;
 }
 
-.contact-number {
-  padding-left: 10px;
+.owner {
+  background-color: #eeeeee;
 }
 
-.owner-flag {
-  padding-left: 10px;
+.contain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .button-text {

@@ -1,26 +1,21 @@
 .right {
-    text-align: right;
+  text-align: right;
 }
 .small-btn {
-    line-height: 16px;
+  line-height: 16px;
 }
-.right-padded {
-    padding-right: 8px;
-}
-.left-padded {
-    padding-left: 2em;
-}
+
 .top-padded {
-    padding-top: 8px;
+  padding-top: 8px;
 }
-hr.divider{
-	height: 10px;
-	border: 0;
-	box-shadow: 0 10px 10px -10px #8c8b8b inset;
+hr.divider {
+  height: 10px;
+  border: 0;
+  box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
 .footer-font {
-    font-size: .75em;
+  font-size: 0.75em;
 }
 .center {
-    text-align: center;
+  text-align: center;
 }
