@@ -14,6 +14,9 @@ import { Subscription } from 'rxjs';
 export class SideDrawerComponent implements OnInit {
 
   private subLogin: Subscription;
+  private subGroup: Subscription;
+  private subGroupChange: Subscription;
+  public inDashboard: boolean;
   public isLoggedIn = false;
   public groups: Group[] = null;
   public loading = true; 
@@ -28,27 +31,66 @@ export class SideDrawerComponent implements OnInit {
         this.isLoggedIn = isLoggedIn;
         if (isLoggedIn) {
           this.loading = true;
-          this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
+          this.groupService.getGroupsOfUser()
+          .then(groups => {
             this.loading = false;
-            this.groups = groups;
+            if (groups) {
+              this.groups = groups;
+            } else {
+              this.groups = [];
+            }  
           })
         } else {
           this.closeMenu();
           this.groups = null;
-
         }
       }
-    )
+    );
+    this.subGroup = this.groupService.getCurrentGroupObservable().subscribe(
+      currentGroup => {
+        if (currentGroup) {
+          if (currentGroup["groupName"] == "Dashboard") {
+            this.inDashboard = true;
+          } else {
+            this.inDashboard = false;
+          }
+        } else {
+          this.inDashboard = false;
+        }
+      }
+    );
    }
 
   ngOnInit() {
     if (this.loginService.getProfile()) {
       this.loading = true;
-      this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
+      this.groupService.getGroupsOfUser()
+      .then(groups => {
         this.loading = false;
-        this.groups = groups;
+        if (groups) {
+          this.groups = groups;
+        } else {
+          this.groups = [];
+        }        
       })
     }
+    this.subGroupChange = this.groupService.getChangeGroupObservable().subscribe(
+      groupChange => {
+        if (groupChange) {
+          this.loading = true;
+          this.groupService.getGroupsOfUser()
+          .then(groups => {
+            this.loading = false;
+            if (groups) {
+              this.groups = groups;
+            } else {
+              this.groups = [];
+            } 
+          }
+          )
+        }
+      }
+    )
   }
 
   closeMenu() {

@@ -11,9 +11,11 @@
 <ons-list>
   <ons-list-header>My Groups</ons-list-header>
   <div *ngIf="groups;else loading_groups">
-    <div *ngFor="let group of groups">
-      <ons-list-item tappable (click)="enterGroup(group)">
-        <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{group.name}}</span></ons-list-item>
+    <div *ngIf="groups.length > 0;else no_groups">
+      <div *ngFor="let group of groups">
+        <ons-list-item tappable (click)="enterGroup(group)">
+          <ons-icon icon="github" size="30px" fixed-width="true"></ons-icon><span>{{group.name}}</span></ons-list-item>
+      </div>
     </div>
   </div>
 </ons-list>
@@ -22,6 +24,10 @@
   <ons-list-item>
     <ons-progress-circular indeterminate></ons-progress-circular><span>Loading Groups...</span>
   </ons-list-item>
+</ng-template>
+<ng-template #no_groups>
+  <ons-list-item>
+    <ons-icon icon="md-close-circle" size="30px" fixed-width="true"></ons-icon><span>You have no groups yet!</span></ons-list-item>
 </ng-template>
 <!-- Modal -->
 <ons-modal #modal_create animation="fade">
@@ -37,7 +43,7 @@
       </div>
       <div class="center">
         <ons-button class="margin-top button-text button-reject" (click)="modal_create.hide()">Cancel</ons-button>
-        <ons-button class="margin-top button-text button-accept" (click)="modal_create.hide(); createGroup();">Create</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="createGroup();">Create</ons-button>
       </div>
     </div>
   </ons-card>
@@ -56,8 +62,16 @@
       </div>
       <div class="center">
         <ons-button class="margin-top button-text button-reject" (click)="modal_join.hide()">Cancel</ons-button>
-        <ons-button class="margin-top button-text button-accept" (click)="modal_join.hide(); joinGroup();">Join</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="joinGroup();">Join</ons-button>
       </div>
+    </div>
+  </ons-card>
+</ons-modal>
+
+<ons-modal #modal_loading animation="fade">
+  <ons-card class="loading-block">
+    <div class="center">
+      <h2>Loading...</h2>
     </div>
   </ons-card>
 </ons-modal>

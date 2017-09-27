@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../user';
 import { UserService } from '../user.service'
 import { LoginService } from '../login.service';
@@ -13,10 +13,17 @@ import { Subscription } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
+  @ViewChild('address') address;
+  @ViewChild('modal_loading') modalLoading;
+
   user: User = null;
   isOwner: boolean = false;
   loading: boolean = true;
-  subLogin: Subscription;
+  validMail = false;
+  validNumber = false;
+
+  private subLogin: Subscription;
+  private subUser: Subscription;
 
   constructor(
     private userService: UserService,
@@ -33,6 +40,11 @@ export class UserProfileComponent implements OnInit {
         }
       }
     )
+    this.subUser = this.userService.getUserObservable().subscribe(
+      userUpdated => {
+        this.modalLoading.nativeElement.hide();
+      }
+    )
    }
 
   ngOnInit() {
@@ -43,6 +55,8 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
+    this.validMail = false;
+    this.validNumber = false;
     this.loading = true;
     this.route.paramMap
     .switchMap((params: ParamMap) => this.userService.getUsersById(+params.get('id')))
@@ -52,9 +66,22 @@ export class UserProfileComponent implements OnInit {
         this.loading = false;
       } else {
         this.user = user; 
+        // Check User Object
         if (this.user.userId == this.loginService.getProfile().alfred.userId) {
           this.isOwner = true;
         }
+        if (this.user.email) {
+          if ((this.user.email.indexOf("@thealfredbutler.com") == -1) && (this.user.email.length > 0)) {
+            this.validMail = true;
+          }
+        }
+        if (this.user.contactNumber) {
+          this.user.contactNumber = this.user.contactNumber.trim().replace(" ", "");
+          if (this.user.contactNumber.length > 0) {
+            this.validNumber = true;
+          }
+        }
+        // Check owner
         if (!this.isOwner) {
           if (!this.user.contactNumber) {
             this.user.contactNumber = "Not Available";
@@ -69,6 +96,27 @@ export class UserProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    console.log(this.user);
+    this.user.address = this.address.nativeElement.value;
+    if (this.user.address) {
+      if (this.user.address.trim().length == 0) {
+        this.user.address = null;
+      }
+    }
+    
+    var updateUser = {
+      email: this.user.email,
+      contact_number: this.user.contactNumber,
+      address: this.user.address,
+      latitude: null,
+      longitude: null,
+    };
+    if (this.user.address) {
+      this.userService.getGeoCodeAndUpdate(updateUser);
+    } else {
+      this.userService.updateUserProfile(updateUser);
+    }
+    
+    // Engage loading block
+    this.modalLoading.nativeElement.show();
   }
 }

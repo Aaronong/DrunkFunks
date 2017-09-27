@@ -39,6 +39,11 @@
   margin-left: 10%;
 }
 
+.loading-block {
+  color: white;
+  background: #2e3e49;
+}
+
 .center {
   text-align: center;
 }

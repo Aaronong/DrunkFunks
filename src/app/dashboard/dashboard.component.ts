@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupService } from '../group.service';
 import { LoginService } from '../login.service';
@@ -14,6 +14,9 @@ import * as ons from 'onsenui';
 export class DashboardComponent implements OnInit {
 
   @Input() groups: Group[] = null;
+  @ViewChild("modal_join") modalJoin;
+  @ViewChild("modal_create") modalCreate;
+  @ViewChild("modal_loading") modalLoading;
 
   private subLogin: Subscription;
 
@@ -50,7 +53,7 @@ export class DashboardComponent implements OnInit {
     // Publish to all group listeners
     this.groupService.updateCurrentGroup({groupName: "Dashboard", routerLink: ['/dashboard']});
 
-    this.groupService.getGroupsByUserIdSlowly(this.loginService.getPlaceHolderUser()).then(groups => {
+    this.groupService.getGroupsOfUser().then(groups => {
       this.groups = groups;
     })
   }
@@ -60,13 +63,59 @@ export class DashboardComponent implements OnInit {
   }
 
   createGroup() {
+    if (this.modalGroup.name) {
+      this.modalGroup.name = this.modalGroup.name.trim();
+      if (this.modalGroup.name.length == 0) {
+        ons.notification.toast('Invalid Name!', {timeout: 3000, modifier: 'red'});
+        return;
+      }
+    } else {
+      ons.notification.toast('Missing Name!', {timeout: 3000, modifier: 'red'});
+      return;
+    }
+
+    if (this.modalGroup.password) {
+      if(this.modalGroup.password.length < 8) {
+        ons.notification.toast('Password too short!', {timeout: 3000, modifier: 'red'});
+        return;
+      }
+    } else {
+      ons.notification.toast('Missing Password!', {timeout: 3000, modifier: 'red'});
+      return;
+    }
+
     console.log(this.modalGroup);
-    ons.notification.toast('Group Created!', {timeout: 3000, modifier: 'green'});
+    this.modalCreate.nativeElement.hide();
+    this.modalLoading.nativeElement.show();
+    this.groupService.createGroup(this.modalGroup)
+    .then(response => {
+      if (response) {
+        if (response == 'name taken') {
+          this.modalCreate.nativeElement.show();
+        } else {
+          this.router.navigate(["/dashboard/group", response]);
+        }
+      }
+      this.modalLoading.nativeElement.hide();
+    })
   }
 
   joinGroup() {
     console.log(this.modalGroup);
-    ons.notification.toast('Joined Group!', {timeout: 3000, modifier: 'green'});
+    this.modalJoin.nativeElement.hide();
+    this.modalLoading.nativeElement.show();
+    this.groupService.joinGroup(this.modalGroup)
+    .then(groupId => {
+      this.modalLoading.nativeElement.hide();
+      if (groupId) {
+        if (groupId == -1) {
+          // Incorrect Password
+          this.modalJoin.nativeElement.show();
+        } else {
+          this.router.navigate(['dashboard/group', groupId]);
+        }
+      }
+    });
   }
 
   resetModal() {

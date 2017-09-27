@@ -6,7 +6,6 @@ import {
   LoginResponse,
   LoginOptions
 } from "ngx-facebook";
-import { GroupService } from "./group.service";
 import { Observable, Subject } from "rxjs";
 import "rxjs/add/operator/toPromise";
 import * as ons from "onsenui";
@@ -20,7 +19,6 @@ export class LoginService {
   public fbToken: any = null;
   public jwtToken: any = null;
   private http: Http;
-  private groupService: GroupService;
 
   private loggedIn = new Subject<boolean>();
 
@@ -32,11 +30,9 @@ export class LoginService {
 
   constructor(
     fbService: FacebookService,
-    groupService: GroupService,
     http: Http
   ) {
     this.fbService = fbService;
-    this.groupService = groupService;
     this.http = http;
 
     this.fbProfile = JSON.parse(
@@ -161,7 +157,6 @@ export class LoginService {
     (<any>window).localStorage.setItem("jwtToken", null);
 
     this.loggedIn.next(false);
-    this.groupService.updateCurrentGroup(null);
     ons.notification.toast("You are Logged Out!", {
       timeout: 3000,
       modifier: "red"
@@ -181,7 +176,7 @@ export class LoginService {
   }
 
   _fetchAlfredProfile() {
-    return this.secureApiGet("https://api.thealfredbutler.com/profile")
+    return this.secureApiGet("https://api.thealfredbutler.com/user/profile")
       .then(res => {
         this.userProfile = res;
         (<any>window).localStorage.setItem(

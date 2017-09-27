@@ -1,0 +1,45 @@
+{
+  "external": {
+      "urls": [
+          {"url": "https://fonts.googleapis.com/css?family=Montserrat:300,500,700"}
+      ]
+  },
+    "static.ignore": [
+      "^\/assets\/ignore.*$"
+    ],
+  "routing": {
+      "index": "/index.html",
+      "routes": {
+          "/": {
+              "match": "exact"
+          },
+          "/main": {
+              "match": "exact"
+          },
+          "/about": {
+              "match": "exact"
+          },
+          "/privacy": {
+              "match": "exact"
+          },
+          "/login": {
+              "match": "exact"
+          },
+          "/tos": {
+              "match": "exact"
+          },
+          "/404": {
+              "match": "exact"
+          },
+          "/dashboard": {
+              "match": "exact"
+          },
+          "/dashboard/group": {
+              "match": "prefix"
+          },
+          "/user": {
+              "match": "prefix"
+          }
+      }
+  }
+}

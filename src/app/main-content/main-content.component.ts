@@ -33,7 +33,6 @@ export class MainContentComponent implements OnInit {
     this.subGroup = this.groupService.getCurrentGroupObservable().subscribe(
       (obj) => {
         this.currentGroup = obj;
-        console.log(obj);
       }
     )
     if (this.loginService.getProfile()) {
@@ -57,6 +56,15 @@ export class MainContentComponent implements OnInit {
 
   logoutFacebook() {
     this.loginService.toggleFacebookLogin();
+    this.groupService.updateCurrentGroup(null);
+  }
+
+  truncate(string) {
+    if (string.length > 20 && string.indexOf(" ") !== -1) {
+      return string.split(" ")[0];
+    } else {
+      return string;
+    }
   }
 
 }

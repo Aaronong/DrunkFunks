@@ -26,7 +26,7 @@
       (click)="popover.hide()" class="menu-header">
       <span>
         <img class="menu-profile-pic" [src]="loginService.getProfile().facebook.picture.data.url">
-        <span class="menu-profile-name">{{loginService.getProfile().facebook.name}}</span>
+        <span class="menu-profile-name">{{truncate(loginService.getProfile().facebook.name)}}</span>
       </span>
     </ons-list-item>
     <ons-list-item *ngIf="isLoggedIn" [routerLink]="['/dashboard']" tappable (click)="popover.hide()"><span class="menu-item">Dashboard</span></ons-list-item>

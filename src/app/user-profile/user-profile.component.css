@@ -27,8 +27,17 @@
 
 .input-area {
   width: 230px;
-  height: 40px;
+  min-height: 40px;
   line-height: 40px;
+}
+
+.loading-block {
+  color: white;
+  background: #2e3e49;
+}
+
+.medium-font {
+  font-size: 15px;
 }
 
 .colour-blue {
