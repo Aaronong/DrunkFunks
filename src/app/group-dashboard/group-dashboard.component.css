@@ -57,3 +57,15 @@
 .button-accept {
   background-color: #284253;
 }
+
+.icon {
+  max-height: 30px;
+  max-width: 30px;
+  vertical-align: middle;
+}
+
+.fab-icon {
+  width: 64px;
+  margin-left: -6px;
+  margin-top: -4px;
+}
