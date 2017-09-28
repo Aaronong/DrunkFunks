@@ -19,10 +19,12 @@ export class DashboardComponent implements OnInit {
   @ViewChild("modal_loading") modalLoading;
 
   private subLogin: Subscription;
+  public reminder = false;
 
   public modalGroup = {
     name: "",
     password: "",
+    retypePassword: "",
   }
 
   constructor(
@@ -48,6 +50,13 @@ export class DashboardComponent implements OnInit {
     if (this.loginService.getProfile() == null) {
       this.router.navigate(["/login"]);
       return;
+    } else {
+      if (this.loginService.getProfile().alfred.address == null || 
+          this.loginService.getProfile().alfred.contact_number == null ||
+          this.loginService.getProfile().alfred.contact_number.length == 0 ||
+          this.loginService.getProfile().alfred.address.length == 0) {
+        this.reminder = true;
+      }
     }
 
     // Publish to all group listeners
@@ -75,7 +84,7 @@ export class DashboardComponent implements OnInit {
     }
 
     if (this.modalGroup.password) {
-      if(this.modalGroup.password.length < 8) {
+      if (this.modalGroup.password.length < 8) {
         ons.notification.toast('Password too short!', {timeout: 3000, modifier: 'red'});
         return;
       }
@@ -84,7 +93,17 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    console.log(this.modalGroup);
+    if (this.modalGroup.retypePassword) {
+      if (this.modalGroup.retypePassword != this.modalGroup.password) {
+        ons.notification.toast("Passwords don't match!", {timeout: 3000, modifier: 'red-long'});
+        return;
+      }
+    } else {
+      ons.notification.toast('Re-type Password!', {timeout: 3000, modifier: 'red'});
+      return;
+    }
+
+    // console.log(this.modalGroup);
     this.modalCreate.nativeElement.hide();
     this.modalLoading.nativeElement.show();
     this.groupService.createGroup(this.modalGroup)
@@ -101,7 +120,7 @@ export class DashboardComponent implements OnInit {
   }
 
   joinGroup() {
-    console.log(this.modalGroup);
+    //console.log(this.modalGroup);
     this.modalJoin.nativeElement.hide();
     this.modalLoading.nativeElement.show();
     this.groupService.joinGroup(this.modalGroup)
@@ -122,6 +141,7 @@ export class DashboardComponent implements OnInit {
     this.modalGroup = {
       name: "",
       password: "",
+      retypePassword: "",
     }
   }
 }

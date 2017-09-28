@@ -230,8 +230,12 @@ export class LoginService {
     return this.http.get(url + query).toPromise();
   }
 
-  // Debug Method
-  getPlaceHolderUser() {
-    return 1;
+  updateProfile() {
+    return this._fetchAlfredProfile().then(
+      response => {
+        let responseJson = response.json();
+        this.userProfile = responseJson.user;
+      }      
+    )
   }
 }

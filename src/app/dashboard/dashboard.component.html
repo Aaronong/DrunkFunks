@@ -1,3 +1,16 @@
+<ons-card *ngIf="reminder">
+  <div class="content center">
+    <ons-icon icon="fa-exclamation" size="30px" fixed-width="true"></ons-icon>
+    <span>You have yet to update your <u>contact number</u> and/or <u>address</u>! 
+      Alfred needs them to offer the best services.</span>
+    <br/>
+    <div class="center">
+      <ons-button class="margin-top button-text button-blue" [routerLink]="['/user', loginService.getProfile().alfred.userId]">
+        Update Now</ons-button>
+    </div>
+  </div>
+</ons-card>
+
 <ons-card>
   <br/>
   <div class="content center">
@@ -40,6 +53,7 @@
       <div>
         <ons-input class="input-area modal-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
         <ons-input class="input-area modal-text" placeholder="Password here (min. 8 characters)" type="password" [(value)]="modalGroup.password"></ons-input>
+        <ons-input class="input-area modal-text" placeholder="Re-type Password here!" type="password" [(value)]="modalGroup.retypePassword"></ons-input>
       </div>
       <div class="center">
         <ons-button class="margin-top button-text button-reject" (click)="modal_create.hide()">Cancel</ons-button>

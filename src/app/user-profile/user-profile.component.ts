@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../user';
 import { UserService } from '../user.service'
 import { LoginService } from '../login.service';
@@ -16,7 +16,7 @@ declare var google: any;
 })
 export class UserProfileComponent implements OnInit {
 
-  @ViewChild('address') address;
+  @ViewChild('address') address: ElementRef;
   @ViewChild('modal_loading') modalLoading;
 
   user: User = null;
