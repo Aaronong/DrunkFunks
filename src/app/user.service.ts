@@ -27,6 +27,7 @@ export class UserService {
     this.loginService.secureApiPost("https://api.thealfredbutler.com/user/update", JSON.stringify(updateUser))
     .then((res) => {
 			if (res.json()['status'] == 'success') {
+        this.loginService.updateProfile();
         ons.notification.toast("Changes Saved!", {
           timeout: 3000,
           modifier: "green"

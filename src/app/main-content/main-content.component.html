@@ -52,16 +52,16 @@
 
 <!-- Modals -->
 <ons-modal #modal_logout animation="fade">
-    <ons-card style="color: black;">
-      <div class="title modal-title">
-        Logout Confirmation
+  <ons-card style="color: black;">
+    <div class="title modal-title">
+      Logout Confirmation
+    </div>
+    <div class="content">
+      <p class="modal-text">Are you sure you want to logout?</p>
+      <div class="center">
+        <ons-button class="margin-top button-text button-reject" (click)="modal_logout.hide()">Cancel</ons-button>
+        <ons-button class="margin-top button-text button-accept" (click)="modal_logout.hide(); logoutFacebook();">Logout</ons-button>
       </div>
-      <div class="content">
-        <p class="modal-text">Are you sure you want to logout?</p>
-        <div class="center">
-          <ons-button class="margin-top button-text button-reject" (click)="modal_logout.hide()">Cancel</ons-button>
-          <ons-button class="margin-top button-text button-accept" (click)="modal_logout.hide(); logoutFacebook();">Logout</ons-button>
-        </div>
-      </div>
-    </ons-card>
-  </ons-modal>
+    </div>
+  </ons-card>
+</ons-modal>

@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild("modal_loading") modalLoading;
 
   private subLogin: Subscription;
+  public reminder = false;
 
   public modalGroup = {
     name: "",
@@ -49,6 +50,12 @@ export class DashboardComponent implements OnInit {
     if (this.loginService.getProfile() == null) {
       this.router.navigate(["/login"]);
       return;
+    } else {
+      if (this.loginService.getProfile().alfred.address == null || 
+          this.loginService.getProfile().alfred.contact_number == null ||
+          this.loginService.getProfile().alfred.contact_number.length == 0) {
+        this.reminder = true;
+      }
     }
 
     // Publish to all group listeners
