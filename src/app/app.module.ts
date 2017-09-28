@@ -59,7 +59,8 @@ import { DirectionsRendererComponent } from './directions-renderer/directions-re
     HttpModule,
     FacebookModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC8u1kP6YBsr68jScWoTYozC9ZXj8nu9pQ'
+      apiKey: 'AIzaSyC8u1kP6YBsr68jScWoTYozC9ZXj8nu9pQ',
+      libraries: ['places'],
     })
   ],
   providers: [
