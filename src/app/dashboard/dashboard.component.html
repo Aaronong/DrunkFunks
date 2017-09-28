@@ -1,8 +1,8 @@
 <ons-card *ngIf="reminder">
-  <div class="content">
+  <div class="content center">
     <ons-icon icon="fa-exclamation" size="30px" fixed-width="true"></ons-icon>
     <span>You have yet to update your <u>contact number</u> and/or <u>address</u>! 
-      Alfred needs your information to provide the best services.</span>
+      Alfred needs them to offer the best services.</span>
     <br/>
     <div class="center">
       <ons-button class="margin-top button-text button-blue" [routerLink]="['/user', loginService.getProfile().alfred.userId]">

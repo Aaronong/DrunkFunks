@@ -53,7 +53,8 @@ export class DashboardComponent implements OnInit {
     } else {
       if (this.loginService.getProfile().alfred.address == null || 
           this.loginService.getProfile().alfred.contact_number == null ||
-          this.loginService.getProfile().alfred.contact_number.length == 0) {
+          this.loginService.getProfile().alfred.contact_number.length == 0 ||
+          this.loginService.getProfile().alfred.address.length == 0) {
         this.reminder = true;
       }
     }
