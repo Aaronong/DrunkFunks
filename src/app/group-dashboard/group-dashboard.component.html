@@ -4,9 +4,9 @@
       <div class="title top-padded">
         {{group.name}}
       </div>
-      <ons-fab position="right top" (click)="cabService()">
-        <img class="fab-icon" src="../../assets/cab-icon.png">
-      </ons-fab>
+      <ons-button modifier="uber" class="top-right" (click)="cabService()">
+        <img class="uber-logo" src="../../assets/uber-icon.png"> Uber Home
+      </ons-button>
       <div class="content">
         <div *ngIf="users;else no_user">
           <div *ngIf="users.length>0">
@@ -45,7 +45,7 @@
 <ng-template #no_group>
   <ons-card>
     <div class="content">
-        <img class="icon" src="../../assets/cross-icon.png">
+      <img class="icon" src="../../assets/cross-icon.png">
       <span>There is no such group.</span>
     </div>
   </ons-card>
@@ -63,7 +63,7 @@
 </ng-template>
 <ng-template #no_user>
   <ons-list-item>
-      <img class="icon" src="../../assets/cross-icon.png">
+    <img class="icon" src="../../assets/cross-icon.png">
     <span>There are no users in this group!</span></ons-list-item>
 </ng-template>
 <ng-template #delete_group>
