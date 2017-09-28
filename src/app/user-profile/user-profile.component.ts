@@ -5,6 +5,9 @@ import { LoginService } from '../login.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Subscription } from 'rxjs';
+import { MapsAPILoader } from '@agm/core';
+
+declare var google: any;
 
 @Component({
   selector: 'app-user-profile',
@@ -30,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     private router: Router,
+    private gMapsApi: MapsAPILoader,
   ) {
     // Listen for logout
     this.subLogin = this.loginService.getLoggedInObservable().subscribe(
@@ -91,6 +95,18 @@ export class UserProfileComponent implements OnInit {
           }
         }
         this.loading = false;
+
+        // Setup AutoComplete with Google Places
+        this.gMapsApi.load().then(() => {
+          if (this.address) {
+            let autocomplete = new google.maps.places.Autocomplete(this.address.nativeElement, {
+              types: ["address"]
+            })
+            console.log("autocomplete ready");
+          }
+        }).catch(e => {
+          console.log(e);
+        })
       }
     });
   }

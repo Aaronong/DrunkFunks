@@ -41,7 +41,7 @@ export class User {
             jsonObject['contact_number'],
             jsonObject['address'],
             jsonObject['latitude'],
-            jsonObject['longtitude'],
+            jsonObject['longitude'],
         )
         return user;
     }

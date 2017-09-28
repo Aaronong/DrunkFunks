@@ -1,0 +1,77 @@
+<ons-page *ngIf="!render">
+  <ons-card>
+    <div class="center">
+      <ons-progress-circular indeterminate></ons-progress-circular><h2>Fetching your current location...</h2>
+      <br>
+      <span>This page requires your permission to retrieve your current location in order to work!</span>
+    </div>
+  </ons-card>
+</ons-page>
+<ons-page *ngIf="render">
+  <agm-map [latitude]="startingLocation.latitude" [longitude]="startingLocation.longitude" [zoom]=14>
+    <agm-marker [latitude]="startingLocation.latitude" [longitude]="startingLocation.longitude" label="S" title="You are here!"></agm-marker>
+    <map-directions-renderer></map-directions-renderer>
+  </agm-map>
+  <div class="content">
+    <div *ngIf="usersInRoute.length > 0;else directions_disabled" class="center">
+      <ons-button (click)="recalculate()">Get Directions</ons-button>
+    </div>
+    <div class="center">
+      <ons-button modifier="uber" (click)="useUber()">
+        <img class="uber-logo" src="../../assets/uber-icon.png">
+        Ride Uber<span class="uber-time" *ngIf="uberTime>0">{{uberTime}} MIN AWAY</span>
+      </ons-button>
+    </div>
+    <ons-list>
+      <ons-list-header>Current Location</ons-list-header>
+      <ons-list-item>
+        <ons-icon icon="md-pin-drop" size="30px" fixed-width="true"></ons-icon>
+        <div *ngIf="!addr;else formatted_addr">
+          <strong>S:</strong>( {{startingLocation.latitude.toFixed(3)}}, {{startingLocation.longitude.toFixed(3)}} )
+        </div>
+      </ons-list-item>
+      <ons-list-header>Who's Going Home?</ons-list-header>
+      <ons-list *ngFor="let user of usersInGroup">
+        <ons-list-item modifier="longdivider">
+          <div class="left">
+            <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
+            <span class="user-name">{{user.name}}</span>
+          </div>
+          <div class="right" *ngIf="user.address;else toggle_disabled">
+            <ons-switch checked (change)="toggleUser(user)"></ons-switch>
+          </div>
+        </ons-list-item>
+        <ons-list-item class="indent" *ngIf="user.address;else no_address">
+          <small>{{user.address}}</small>
+        </ons-list-item>
+      </ons-list>
+    </ons-list>
+  </div>
+</ons-page>
+
+<ng-template #directions_disabled>
+  <div class="center">
+    <ons-button disabled>Get Directions</ons-button>
+  </div>
+</ng-template>
+<ng-template #toggle_disabled>
+  <div class="right">
+    <ons-switch disabled></ons-switch>
+  </div>
+</ng-template>
+<ng-template #no_address>
+  <ons-list-item class="indent text-disabled">
+    <small>Not set.</small>
+  </ons-list-item>
+</ng-template>
+<ng-template #formatted_addr>
+  <strong>S: </strong>{{addr}}
+</ng-template>
+
+<ons-modal #modal_loading animation="fade">
+  <ons-card class="loading-block">
+    <div class="center">
+      <h2>Alfred is working...</h2>
+    </div>
+  </ons-card>
+</ons-modal>

@@ -9,7 +9,6 @@ import { Observable, Subject } from "rxjs";
 export class UserService {
 
   private userUpdated = new Subject<boolean>();
-  //private googleMapApiKey = "AIzaSyCMpuRlR_wcbQ28_13YFs1mEUl9Cl9Oni4"
 
   constructor(
     private http: Http,
@@ -17,10 +16,6 @@ export class UserService {
   ) {
 
   }
-
-  // getAllUsers(): Promise<User[]> {
-  //   return [Promise.resolve(MOCK_USERS);]
-  // }
 
   getUsersById(userId): Promise<User> {
     return this.loginService.secureApiGet('https://api.thealfredbutler.com/user/profile/' + userId)
@@ -31,7 +26,6 @@ export class UserService {
   updateUserProfile(updateUser) {
     this.loginService.secureApiPost("https://api.thealfredbutler.com/user/update", JSON.stringify(updateUser))
     .then((res) => {
-      console.log(res);
 			if (res.json()['status'] == 'success') {
         ons.notification.toast("Changes Saved!", {
           timeout: 3000,
@@ -39,7 +33,6 @@ export class UserService {
         });
         this.userUpdated.next(true);
 			} else if (res.json()['status'].indexOf("Error") != -1) {
-        console.log(res.json()['status']);
         ons.notification.toast("An error occurred!", {
           timeout: 3000,
           modifier: "red"
@@ -59,29 +52,6 @@ export class UserService {
     }
     
     return this.updateUserProfile(updateUser);
-    // return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + treatedAddress 
-    // + "&key=" + this.googleMapApiKey)
-    // .toPromise()
-    // .then(response => {
-    //   let json = response.json();
-    //   let results = json.results;
-    //   if (results.length > 0) {
-    //     let loc = json.results[0].geometry.location;
-    //     let lat = loc.lat;
-    //     let lng = loc.lng;
-    //     updateUser.longitude = lng;
-    //     updateUser.latitude = lat;
-    //     console.log(updateUser);
-    //     return this.updateUserProfile(updateUser);
-    //   } else {
-    //     return this.updateUserProfile(updateUser);
-    //   }
-    // })
-    // .catch(error => {
-    //   updateUser.longitude = null;
-    //   updateUser.latitude = null;
-    //   return this.updateUserProfile(updateUser);
-    // });
   }
 
   public getUserObservable(): Observable<boolean> {

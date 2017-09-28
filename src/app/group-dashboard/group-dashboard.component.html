@@ -4,6 +4,9 @@
       <div class="title top-padded">
         {{group.name}}
       </div>
+      <ons-fab position="right top" (click)="cabService()">
+        <img class="fab-icon" src="../../assets/cab-icon.png">
+      </ons-fab>
       <div class="content">
         <div *ngIf="users;else no_user">
           <div *ngIf="users.length>0">
@@ -11,7 +14,7 @@
               <ons-list-item *ngIf="user.userId == group.ownerId" [routerLink]="['/user', user.userId]" class="owner" tappable>
                 <div class="contain">
                   <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
-                  <span><strong>{{user.name}}</strong></span>
+                  <span><img class="icon" src="../../assets/star-icon.png"><strong>{{user.name}}</strong></span>
                   <span *ngIf="user.contactNumber;else no_contact" class="contact-number">({{user.contactNumber}})</span>
                 </div>
               </ons-list-item>
@@ -20,7 +23,9 @@
               <ons-list-item *ngIf="user.userId != group.ownerId" [routerLink]="['/user', user.userId]" tappable>
                 <div class="contain">
                   <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
-                  <span><strong>{{user.name}}</strong></span>
+                  <span>
+                    <strong>{{user.name}}</strong>
+                  </span>
                   <span *ngIf="user.contactNumber;else no_contact" class="contact-number">({{user.contactNumber}})</span>
                 </div>
               </ons-list-item>
@@ -40,7 +45,7 @@
 <ng-template #no_group>
   <ons-card>
     <div class="content">
-      <ons-icon icon="md-close-circle" size="30px" fixed-width="true"></ons-icon>
+        <img class="icon" src="../../assets/cross-icon.png">
       <span>There is no such group.</span>
     </div>
   </ons-card>
@@ -58,7 +63,7 @@
 </ng-template>
 <ng-template #no_user>
   <ons-list-item>
-    <ons-icon icon="md-close-circle" size="30px" fixed-width="true"></ons-icon>
+      <img class="icon" src="../../assets/cross-icon.png">
     <span>There are no users in this group!</span></ons-list-item>
 </ng-template>
 <ng-template #delete_group>

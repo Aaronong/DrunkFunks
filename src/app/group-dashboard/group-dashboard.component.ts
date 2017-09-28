@@ -6,7 +6,6 @@ import { User } from '../user';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import { Subscription } from 'rxjs';
-import * as ons from 'onsenui';
 
 @Component({
   selector: 'app-group-dashboard',
@@ -96,5 +95,9 @@ export class GroupDashboardComponent implements OnInit {
 
   deleteGroup() {
     this.leaveGroup();
+  }
+
+  cabService() {
+    this.router.navigate(['dashboard/group/cab', this.currentGroupId]);
   }
 }

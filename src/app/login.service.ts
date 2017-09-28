@@ -20,6 +20,8 @@ export class LoginService {
   public jwtToken: any = null;
   private http: Http;
 
+  private debugToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MDYzMzM3MzksImV4cCI6MTUwNjkzODUzOSwiYXVkIjoidGhlYWxmcmVkYnV0bGVyLmNvbSIsImlzcyI6ImFwaS50aGVhbGZyZWRidXRsZXIuY29tIiwic3ViIjoie1widXNlclwiOntcInVzZXJJZFwiOjEsXCJlbWFpbFwiOlwiMTg3MTM1ODY0NjIxMTEwOUB0aGVhbGZyZWRidXRsZXIuY29tXCIsXCJuYW1lXCI6XCJTa3kgTGV2aXNcIixcImZpZFwiOlwiMTg3MTM1ODY0NjIxMTEwOVwiLFwiY29udGFjdF9udW1iZXJcIjpudWxsLFwiYWRkcmVzc1wiOm51bGwsXCJsYXRpdHVkZVwiOm51bGwsXCJsb25naXR1ZGVcIjpudWxsLFwiY3JlYXRlZEF0XCI6XCIyMDE3LTA5LTE5VDE0OjE4OjIyLjAwMFpcIixcInVwZGF0ZWRBdFwiOlwiMjAxNy0wOS0xOVQxNDoxODoyMi4wMDBaXCJ9LFwiZmJUb2tlblwiOlwiRUFBTVRjakdsV01nQkFLeFlaQVV6YjdwaThCUm1GSWNEeDJyNTdyMTFCUWFDb0VmTTEycW5qYXJZNWNvVkNuRnpVQTBoRGk3akdNZlY1SVBRRWFpeWRaQ3plRXN5YWhtb1FvZWU1aFEwZjRZNlRGOFJnOGhDaFhKSm9TMjZPd1BjQ0JaQnA1aHpONWN6RE5rSUpiTkJqMm5lTE5qWkNsQVpEXCJ9In0.xKqm-aOORMMpqtys_cc6aVahXg7zNH4qwWJssOW-V1c";
+
   private loggedIn = new Subject<boolean>();
 
   private options: LoginOptions = {
@@ -86,6 +88,16 @@ export class LoginService {
   secureApiGet(url: string) {
     let headers = new Headers();
     headers.append("Authorization", "Bearer " + this.jwtToken);
+    return this.http
+      .get(url, {
+        headers: headers
+      })
+      .toPromise();
+  }
+
+  secureApiGetDebug(url: string) {
+    let headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.debugToken);
     return this.http
       .get(url, {
         headers: headers
