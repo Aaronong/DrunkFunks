@@ -33,7 +33,7 @@
     <ons-list-item [routerLink]="['/about']" tappable (click)="popover.hide()"><span class="menu-item">About</span></ons-list-item>
     <ons-list-item [routerLink]="['/privacy']" tappable (click)="popover.hide()"><span class="menu-item">Privacy</span></ons-list-item>
     <ons-list-item [routerLink]="['/tos']" tappable (click)="popover.hide()"><span class="menu-item">Terms</span></ons-list-item>
-    <ons-list-item *ngIf="isLoggedIn" tappable (click)="popover.hide(); logoutFacebook();">
+    <ons-list-item *ngIf="isLoggedIn" tappable (click)="popover.hide(); modal_logout.show()">
       <span class="menu-item">Logout</span>
     </ons-list-item>
   </ons-list>
@@ -49,3 +49,19 @@
     </span>
   </div>
 </ng-template>
+
+<!-- Modals -->
+<ons-modal #modal_logout animation="fade">
+    <ons-card style="color: black;">
+      <div class="title modal-title">
+        Logout Confirmation
+      </div>
+      <div class="content">
+        <p class="modal-text">Are you sure you want to logout?</p>
+        <div class="center">
+          <ons-button class="margin-top button-text button-reject" (click)="modal_logout.hide()">Cancel</ons-button>
+          <ons-button class="margin-top button-text button-accept" (click)="modal_logout.hide(); logoutFacebook();">Logout</ons-button>
+        </div>
+      </div>
+    </ons-card>
+  </ons-modal>

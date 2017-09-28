@@ -48,3 +48,32 @@
 .menu-button {
   color: white;
 }
+
+.button-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+}
+
+.button-reject {
+  background-color: #c0c0c0;
+}
+
+.button-accept {
+  background-color: #284253;
+}
+
+.modal-text {
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-title {
+  font-family: "Montserrat", sans-serif;
+}
+
+.margin-top {
+  margin-top: 5px;
+}
+
+.center {
+  text-align: center;
+}
