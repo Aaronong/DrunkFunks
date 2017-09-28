@@ -37,7 +37,23 @@ body {
   background-color: hsl(356, 72%, 48%);
   margin-bottom: 16px;
 }
+
 .toast--red__message {
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+}
+
+.toast--red-long {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  border-radius: 30px;
+  background-color: hsl(356, 72%, 48%);
+  margin-bottom: 16px;
+}
+
+.toast--red-long__message {
   margin: 0;
   text-align: center;
   font-size: 16px;

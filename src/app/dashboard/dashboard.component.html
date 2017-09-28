@@ -40,6 +40,7 @@
       <div>
         <ons-input class="input-area modal-text" placeholder="Group Name here!" [(value)]="modalGroup.name"></ons-input>
         <ons-input class="input-area modal-text" placeholder="Password here (min. 8 characters)" type="password" [(value)]="modalGroup.password"></ons-input>
+        <ons-input class="input-area modal-text" placeholder="Re-type Password here!" type="password" [(value)]="modalGroup.retypePassword"></ons-input>
       </div>
       <div class="center">
         <ons-button class="margin-top button-text button-reject" (click)="modal_create.hide()">Cancel</ons-button>
