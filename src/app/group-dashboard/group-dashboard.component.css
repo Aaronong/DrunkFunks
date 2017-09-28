@@ -69,3 +69,16 @@
   margin-left: -6px;
   margin-top: -4px;
 }
+
+.uber-logo {
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+}
+
+.top-right {
+  position: absolute;
+  top: 27px;
+  right: 20px;
+}
