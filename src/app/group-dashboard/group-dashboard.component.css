@@ -77,8 +77,25 @@
   vertical-align: middle;
 }
 
-.top-right {
-  position: absolute;
-  top: 27px;
-  right: 20px;
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-text {
+  font-family: "Montserrat", sans-serif;
+}
+
+.contact-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.admin-marker {
+  color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 5px;
+  padding: 0 5px 0 5px;
 }

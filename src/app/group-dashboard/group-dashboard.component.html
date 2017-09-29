@@ -1,12 +1,14 @@
 <div *ngIf="!loading;else loading_group">
   <div *ngIf="group;else no_group">
     <ons-card>
-      <div class="title top-padded">
-        {{group.name}}
+      <div class="group-header">
+        <h2 class="title-text top-padded">
+          {{group.name}}
+        </h2>
+        <ons-button modifier="uber" (click)="cabService()">
+          <img class="uber-logo" src="../../assets/uber-icon.png"> Uber Home
+        </ons-button>
       </div>
-      <ons-button modifier="uber" class="top-right" (click)="cabService()">
-        <img class="uber-logo" src="../../assets/uber-icon.png"> Uber Home
-      </ons-button>
       <div class="content">
         <div *ngIf="users;else no_user">
           <div *ngIf="users.length>0">
@@ -14,8 +16,11 @@
               <ons-list-item *ngIf="user.userId == group.ownerId" [routerLink]="['/user', user.userId]" class="owner" tappable>
                 <div class="contain">
                   <img class="user-profile-pic" [src]="'https://graph.facebook.com/' + user.fid + '/picture?type=small'">
-                  <span><img class="icon" src="../../assets/star-icon.png"><strong>{{user.name}}</strong></span>
-                  <span *ngIf="user.contactNumber;else no_contact" class="contact-number">({{user.contactNumber}})</span>
+                  <span><strong>{{user.name}}</strong></span>
+                  <div class="contact-flex">
+                    <div class="admin-marker">Admin</div>
+                    <span *ngIf="user.contactNumber;else no_contact" class="contact-number">({{user.contactNumber}})</span>
+                  </div>
                 </div>
               </ons-list-item>
             </div>
